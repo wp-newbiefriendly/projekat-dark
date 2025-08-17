@@ -11,21 +11,12 @@
         <hr class="solid">
         <div class="container mt-5">
             <ul class="list-group list-group-horizontal justify-content-center">
-                <li class="list-group-item">
-                    <i class="fas fa-sun text-warning"></i> Beograd
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-sun text-warning"></i> Novi Sad
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-sun text-warning"></i> Zagreb
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-sun text-warning"></i> Sarajevo
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-sun text-warning"></i> Podgorica
-                </li>
+                @foreach($cities as $city)
+                    <li class="list-group-item">
+                        <i class="fas fa-sun text-warning"></i>
+                        {{ $city->name }} - {{ $city->temperature }}°C
+                    </li>
+                @endforeach
             </ul>
         </div>
 
