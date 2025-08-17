@@ -14,7 +14,7 @@
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="/admin/cities">🛠 Admin</a></li>
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/prognoza"><i class="fas fa-sun text-warning"></i>   Prognoza</a></li>
+                <li class="nav-item"><a class="nav-link" href="/prognoza"><i class="fas fa-sun text-warning"></i>   Prognoza</a></li>
             </ul>
         </div>
 
