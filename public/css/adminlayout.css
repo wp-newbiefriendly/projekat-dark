@@ -1,0 +1,80 @@
+/* Container */
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    margin: 10px;
+}
+
+/* Hide checkbox */
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ddd;
+    border-radius: 30px;
+    transition: background-color 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    font-size: 16px;
+}
+
+/* Ikonice */
+.slider .icon {
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.slider .moon { opacity: 0; }
+.slider .sun { opacity: 1; }
+
+/* Kada je čekiran */
+.theme-toggle input:checked + .slider {
+    background-color: #333;
+}
+.theme-toggle input:checked + .slider .moon { opacity: 1; }
+.theme-toggle input:checked + .slider .sun { opacity: 0; }
+
+/* Dark Mode */
+.dark-mode {
+    background-color: #121212;
+    color: #f1f1f1;
+}
+.dark-mode .bg-light { background-color: #222 !important; }
+.dark-mode .list-group-item { background-color: #1e1e1e; color: #ddd; }
+
+/* Dark mode za tabele */
+.dark-mode .table {
+    background-color: #1e1e1e !important;
+    color: #f1f1f1 !important;
+}
+
+.dark-mode .table th {
+    background-color: #2a2a2a !important;
+    color: #fff !important;
+}
+
+.dark-mode .table td {
+    background-color: #242424 !important;
+    color: #ddd !important;
+    border-color: #444 !important;
+}
+/* Striped redovi u dark modu */
+.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #1b1b1b !important;
+}
+.dark-mode .table-striped tbody tr:nth-of-type(even) {
+    background-color: #242424 !important;
+}
+
+
+
