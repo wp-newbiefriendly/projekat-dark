@@ -19,6 +19,10 @@ class Weather extends Seeder
             if ($city === null) {
                 $this->command->getOutput()->error('Niste uneli ime grada!');
             }
+            // Domaci: Proveri da li vec postoji ime grada
+            if (CityTemperatureModel::where('city', $city)->exists()) {
+                throw new \Exception("Grad '$city' već postoji u bazi!");
+            }
 
             // Pitanje za temperaturu
             $temperature = $this->command->ask('Unesite temperaturu za ' . $city . ':');
