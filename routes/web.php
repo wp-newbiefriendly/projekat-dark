@@ -12,7 +12,7 @@ Route::get('/', function () {
 // Auth Stranice:
 // Prognoza
 Route::get('/prognoza', [App\Http\Controllers\CityTemperaturesController::class, 'allShowPrognoza'])
-    ->name('prognoza') ->middleware('auth');
+    ->name('weather') ->middleware('auth');
 
 // Stranice za Admine
 Route::middleware(['auth', AdminCheckMiddleware::class])

@@ -18,7 +18,7 @@ class CityTemperaturesController extends Controller
     public function allShowPrognoza()
     {
         $cities = CityTemperatureModel::all();
-        return view('prognoza', compact('cities'));
+        return view('weather', compact('cities'));
     }
 
     public function showAddCityForm() {
