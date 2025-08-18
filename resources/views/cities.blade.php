@@ -10,7 +10,7 @@
 
 @section('content')
 
-    <h2 class="mb-4">Lista Gradova</h2>
+    <h2 class="mb-4">Lista Gradova ({{ $cities->count() }})</h2>
 
     <table class="table table-bordered table-striped">
         <thead>
