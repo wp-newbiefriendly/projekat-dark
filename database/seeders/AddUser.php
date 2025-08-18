@@ -10,24 +10,28 @@ class AddUser extends Seeder
 {
     public function run(): void
     {
+        // Unesi email - **required**
         $email = $this->command->ask('Unesite email:');
         if (empty($email)) {
-            throw new \Exception("❌ Niste uneli email!");
+            $this->command->error('❌ Niste uneli email!');
+            return; // prekidamo operaciju
         }
-
-        // Provera exist - ako postoji
+        // Provera exist - ako postoji isti email u bazi!
         if (User::where('email', $email)->exists()) {
-            throw new \Exception("❌ User sa emailom '$email' već postoji u bazi!");
+            $this->command->error("❌ User sa email-om '$email' već postoji u bazi!");
+            return;
         }
-
+        // Unesi username - **required**
         $username = $this->command->ask('Unesite username:');
         if (empty($username)) {
-            throw new \Exception("❌ Niste uneli username!");
+            $this->command->error('❌ Niste uneli username!');
+            return;
         }
-
+        // Unesi password - **required**
         $password = $this->command->ask('Unesite lozinku:');
         if (empty($password)) {
-            throw new \Exception("❌ Niste uneli lozinku!");
+            $this->command->error('❌ Niste uneli lozinku!');
+            return;
         }
 
         User::create([
