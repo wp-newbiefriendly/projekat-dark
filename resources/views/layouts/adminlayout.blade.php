@@ -8,12 +8,23 @@
     <link rel="stylesheet" href="{{ asset('css/adminlayout.css') }}">
 </head>
 <body>
+<!-- Topbar -->
+<nav class="navbar navbar-dark bg-dark justify-content-between px-3">
+    <span class="navbar-brand mb-0 h4">🛠 Admin Panel</span>
+
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="btn btn-outline-light btn-sm">
+            Logout
+        </button>
+    </form>
+</nav>
 
 <div class="d-flex">
     <!-- Sidebar -->
     <div class="bg-light border-end" style="width: 220px; min-height: 100vh;">
         <div class="p-3">
-            <h4>🛠 Admin Panel</h4>
+            <h4>Dashboard</h4>
         </div>
         <label class="theme-toggle">
             <input type="checkbox" id="darkModeSwitch">
@@ -23,7 +34,8 @@
   </span>
         </label>
         <div class="list-group list-group-flush">
-            <a href="/" class="list-group-item list-group-item-action">🏠 Pocetna stranica (frontend)</a>
+            <a href="/" class="list-group-item list-group-item-action">🏠 Pocetna stranica</a>
+            <a href="/prognoza" class="list-group-item list-group-item-action">☀️ Prognoza</a>
             <hr style="margin: 15px 0px 15px;">
             <a href="/admin/cities" class="list-group-item list-group-item-action">Svi Gradovi</a>
             <a href="/admin/add-cities" class="list-group-item list-group-item-action">➕ Dodaj Grad</a>

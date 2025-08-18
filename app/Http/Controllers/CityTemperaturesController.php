@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\CityTemperatureModel;
-use App\Models\ContactModel;
-use App\Models\ProductModel;
 use Illuminate\Http\Request;
 
 class CityTemperaturesController extends Controller

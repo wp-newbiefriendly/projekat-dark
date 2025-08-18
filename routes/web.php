@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminCheckMiddleware;
 use App\Http\Controllers\CityTemperaturesController;
-use App\Http\Controllers\Auth\LoginController;
 
 // Stranice za Usere
 Route::get('/', function () {
