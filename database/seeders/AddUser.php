@@ -2,36 +2,41 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Faker\Factory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class AddUser extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-     $amount = $this->command->ask('How many users would you like?', 500);
-     $whichpassword = $this->command->ask('Which passwords would you like to generate?', 'password');
+        $email = $this->command->ask('Unesite email:');
+        if (empty($email)) {
+            throw new \Exception("❌ Niste uneli email!");
+        }
 
-     $faker = Factory::create();
+        // Provera exist - ako postoji
+        if (User::where('email', $email)->exists()) {
+            throw new \Exception("❌ User sa emailom '$email' već postoji u bazi!");
+        }
 
-     $this->command->getOutput()->progressStart($amount);
+        $username = $this->command->ask('Unesite username:');
+        if (empty($username)) {
+            throw new \Exception("❌ Niste uneli username!");
+        }
 
-     for ($i = 0; $i < $amount; $i++)
-     {
-         User::create([
-             'name' => $faker->name,
-             'email' => $faker->email,
-             'password' => Hash::make($whichpassword),
-             'role' => 'user'
-         ]);
-         $this->command->getOutput()->progressAdvance(step:1);
-     }
-     $this->command->getOutput()->progressFinish();
+        $password = $this->command->ask('Unesite lozinku:');
+        if (empty($password)) {
+            throw new \Exception("❌ Niste uneli lozinku!");
+        }
+
+        User::create([
+            'name' => $username,
+            'email' => $email,
+            'password' => Hash::make($password),
+            'role' => 'user',
+        ]);
+
+        $this->command->info("✔ User '$email' uspešno dodat u bazu.");
     }
 }
