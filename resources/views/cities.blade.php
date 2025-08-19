@@ -10,7 +10,16 @@
 
 @section('content')
 
-    <h2 class="mb-4">Lista Gradova ({{ $weather->count() }})</h2>
+    <form method="GET" action="{{ url()->current() }}">
+        <label for="per_page">Prikaži:</label>
+        <select name="per_page" id="per_page" onchange="this.form.submit()">
+            <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+            <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+            <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+        </select>
+    </form>
+
+    <h2 class="mb-4">Lista Gradova ({{ $weather->total() }})</h2>
 
     <table class="table table-bordered table-striped">
         <thead>
@@ -35,7 +44,6 @@
         @endforeach
         </tbody>
     </table>
-
     {{-- Obrisani gradovi --}}
     <h3 class="mt-5">🗑️ Obrisani Gradovi ({{ $trashedWeather->count() }})</h3>
     @if($trashedWeather->count())
