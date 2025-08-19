@@ -20,7 +20,7 @@ class Weather extends Seeder
         $count  = $cities->count();
 
 
-        foreach ($cities as $city) {
+        foreach ($cities as $index => $city) {
           DB::table("weather")->insert([
               'city_id' => $city->id,
               'temperature' => rand(20, 35), // trenutna random temperatura
@@ -29,11 +29,10 @@ class Weather extends Seeder
           ]);
 
       }
-        $progress = intval((($index+1) / $count) * 50); // širina bara = 50 znakova
-        $bar      = str_repeat("█", $progress) . str_repeat(" ", 50 - $progress); // puni i prazni delovi
-        $percent  = round((($index+1)/$count)*100); // procenat završenog posla
+        $progress = intval((($index+1) / $count) * 50);
+        $bar      = str_repeat("█", $progress) . str_repeat(" ", 50 - $progress);
+        $percent  = round((($index+1)/$count)*100);
 
-        // 6. Prikazujemo progress bar u jednom redu, zajedno sa imenom grada!
         echo "\r[".$bar."] $percent% | ".$city->name." ($index/$count)";
     }
 }
