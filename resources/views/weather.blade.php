@@ -10,10 +10,10 @@
 
             <div class="container mt-5">
                 <ul class="list-group list-group-horizontal justify-content-center">
-                    @foreach($cities as $city)
+                    @foreach($weather as $weather)
                         <li class="list-group-item">
                             <i class="fas fa-sun text-warning"></i>
-                            {{ $city->city }} {{ $city->temperatures }}°C
+                            {{ $weather->city }} {{ $weather->temperatures }}°C
                         </li>
                     @endforeach
                 </ul>

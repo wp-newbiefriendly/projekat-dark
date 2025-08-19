@@ -10,7 +10,7 @@
 
 @section('content')
 
-    <h2 class="mb-4">Lista Gradova ({{ $cities->count() }})</h2>
+    <h2 class="mb-4">Lista Gradova ({{ $weather->count() }})</h2>
 
     <table class="table table-bordered table-striped">
         <thead>
@@ -22,14 +22,14 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($cities as $city)
+        @foreach($weather as $weather)
             <tr>
-                <td>{{ $city->id }}</td>
-                <td>{{ $city->city }}</td>
-                <td>{{ $city->temperatures }}</td>
+                <td>{{ $weather->id }}</td>
+                <td>{{ $weather->city }}</td>
+                <td>{{ $weather->temperatures }}</td>
                 <td>
-                    <a href="{{ route('editCities', ['city' => $city->id]) }}" class="btn btn-sm btn-primary">Izmeni</a>
-                    <a href="{{ route('deleteCities', ['city' => $city->id]) }}" class="btn btn-sm btn-danger">Obriši</a>
+                    <a href="{{ route('editCities', ['weather' => $weather->id]) }}" class="btn btn-sm btn-primary">Izmeni</a>
+                    <a href="{{ route('deleteCities', ['weather' => $weather->id]) }}" class="btn btn-sm btn-danger">Obriši</a>
                 </td>
             </tr>
         @endforeach
@@ -37,8 +37,8 @@
     </table>
 
     {{-- Obrisani gradovi --}}
-    <h3 class="mt-5">🗑️ Obrisani Gradovi ({{ $trashedCities->count() }})</h3>
-    @if($trashedCities->count())
+    <h3 class="mt-5">🗑️ Obrisani Gradovi ({{ $trashedWeather->count() }})</h3>
+    @if($trashedWeather->count())
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -48,7 +48,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($trashedCities as $trashed)
+            @foreach($trashedWeather as $trashed)
                 <tr>
                     <td>{{ $trashed->city }}</td>
                     <td>{{ $trashed->temperatures }}</td>

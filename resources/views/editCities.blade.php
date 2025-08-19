@@ -16,21 +16,20 @@
     @endif
 
     <!-- Forma za editovanje, koristimo metodu PUT -->
-    <form method="POST" action="{{ route('updateCities', ['city' => $city->id]) }}">
+    <form action="{{ route('updateCities', $weather->id) }}" method="POST">
         @csrf
         @method('PUT')
-
         <div class="mb-3">
             <label for="city" class="form-label">Naziv Grada</label>
             <input type="text" name="city" class="form-control"
-                   value="{{ old('city', $city->city ?? '') }}"
+                   value="{{ old('city', $weather->city ?? '') }}"
                    placeholder="Naziv" required>
         </div>
 
         <div class="mb-3">
             <label for="temperatures" class="form-label">Temperatura</label>
             <input type="number" name="temperatures" class="form-control"
-                   value="{{ old('temperatures', $city->temperatures ?? '') }}"
+                   value="{{ old('temperatures', $weather->temperatures ?? '') }}"
                    placeholder="Temperatura" required>
         </div>
 
