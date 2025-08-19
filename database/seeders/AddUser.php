@@ -34,7 +34,7 @@ class AddUser extends Seeder
             return;
         }
         // Izaberi role - ask ili choice **required
-        // Varijanta ->choice - izaberi ponudjenje opcije | $role = $this->command->choice('Izaberite role:', ['admin', 'user']);
+        // Varijanta ->choice - izaberi ponudjene opcije | $role = $this->command->choice('Izaberite role:', ['admin', 'user']);
         $role = $this->command->ask("Unesite role (admin ili user)");
         if (empty($role)) {
             $this->command->error("Niste uneli role!");
