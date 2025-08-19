@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ForecastCityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminCheckMiddleware;
 use App\Http\Controllers\CityTemperaturesController;
@@ -8,6 +9,8 @@ use App\Http\Controllers\CityTemperaturesController;
 Route::get('/', function () {
     return view('welcome');
 });
+//FORECAST
+Route::get('/forecast/{city}', [ForecastCityController::class, 'forecastCity']);
 
 // Auth Stranice:
 // Prognoza
@@ -38,6 +41,7 @@ Route::middleware(['auth', AdminCheckMiddleware::class])
             ->name('deleteCities');
         // Undo grad
         Route::get('/cities/undo/{city}', [CityTemperaturesController::class, 'undoCity']);
+
 
     });
 

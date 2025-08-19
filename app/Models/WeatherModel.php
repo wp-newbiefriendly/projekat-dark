@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CityTemperatureModel extends Model
+class WeatherModel extends Model
 {
     use SoftDeletes;
 
-    protected $table = "cities";
+    protected $table = "weather";
 
     protected $fillable =
         ['city', 'temperatures'];

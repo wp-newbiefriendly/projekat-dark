@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CityTemperatureModel;
+use App\Models\WeatherModel;
 use Illuminate\Http\Request;
 
 class CityTemperaturesController extends Controller
@@ -10,8 +10,8 @@ class CityTemperaturesController extends Controller
     // Svi + obrisani gradovi
     public function showCities()
     {
-        $cities = CityTemperatureModel::all(); // aktivni
-        $trashedCities = CityTemperatureModel::onlyTrashed()->get(); // obrisani
+        $weather = WeatherModel::all(); // aktivni
+        $trashedWeather = CityTemperatureModel::onlyTrashed()->get(); // obrisani
 
         return view('cities', compact('cities', 'trashedCities'));
     }
