@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\CityTemperatureModel;
+use App\Models\WeatherModel;
 use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class Weather extends Seeder
 {
@@ -14,32 +15,25 @@ class Weather extends Seeder
     // Novi je BulkWeatherSeeder za dodavanje ispisanih podataka GRAD i TEMPERATURA iz varijable u bazu
     public function run(): void
     {
-            // Pitanje za ime grada
-            $city = $this->command->ask('Unesite ime grada:');
-            if (empty($city)) {
-                $this->command->error('❌ Niste uneli ime grada!');
-                return; // prekidamo operaciju
-            }
-            // Proveri da li vec postoji ime grada
-            if (CityTemperatureModel::where('city', $city)->exists()) {
-                $this->command->error("❌ Grad '$city' već postoji u bazi!");
-                return; // prekida izvršavanje
-            }
+      $cities = DB::table("cities")->get();
 
-            // Pitanje za temperaturu
-            $temperature = $this->command->ask('Unesite temperaturu za ' . $city . ':');
-            if ($temperature === null || $temperature === '') {
-                $this->command->error("❌ Niste uneli temperaturu!");
-                return;
-            }
+        $count  = $cities->count();
 
-            // Upis u bazu
-            CityTemperatureModel::create([
-                'city' => $city,
-                'temperatures' => $temperature,
-            ]);
 
-            $this->command->info("✔ Grad '$city' sa temperaturom $temperature dodat u bazu.");
-        }
+        foreach ($cities as $city) {
+          DB::table("weather")->insert([
+              'city_id' => $city->id,
+              'temperature' => rand(20, 35), // trenutna random temperatura
+              'created_at' => now(),
+              'updated_at' => now(),
+          ]);
+
+      }
+        $progress = intval((($index+1) / $count) * 50); // širina bara = 50 znakova
+        $bar      = str_repeat("█", $progress) . str_repeat(" ", 50 - $progress); // puni i prazni delovi
+        $percent  = round((($index+1)/$count)*100); // procenat završenog posla
+
+        // 6. Prikazujemo progress bar u jednom redu, zajedno sa imenom grada
+        echo "\r[".$bar."] $percent% | ".$city->name." ($index/$count)";
     }
 }
