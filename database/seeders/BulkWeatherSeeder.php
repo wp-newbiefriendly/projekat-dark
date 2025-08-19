@@ -17,7 +17,7 @@ class BulkWeatherSeeder extends Seeder
             "Negotin" => 28,
             "Bor" => 26
         ];
-        // Skracena verzija firstOrCreate - proveri da li postoji ako ne ubaci u bazu
+        // Skracena verzija firstOrCreate - proveri da li postoji, ako ne ubaci u bazu
         foreach ($prognoza as $city => $temperatures) {
             $weather = CityTemperatureModel::firstOrCreate(
                 ["city" => $city],
