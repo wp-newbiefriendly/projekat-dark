@@ -33,7 +33,7 @@ class Weather extends Seeder
         $bar      = str_repeat("█", $progress) . str_repeat(" ", 50 - $progress); // puni i prazni delovi
         $percent  = round((($index+1)/$count)*100); // procenat završenog posla
 
-        // 6. Prikazujemo progress bar u jednom redu, zajedno sa imenom grada
+        // 6. Prikazujemo progress bar u jednom redu, zajedno sa imenom grada!
         echo "\r[".$bar."] $percent% | ".$city->name." ($index/$count)";
     }
 }
