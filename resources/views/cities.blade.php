@@ -64,6 +64,11 @@
                     <td>{{ $trashed->temperature }}</td>
                     <td>
                         <a href="{{ url('/admin/cities/undo/'.$trashed->id) }}" class="btn btn-success btn-sm">Vrati</a>
+                        <a href="{{ route('forceDeleteCity', $trashed->id) }}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Da li ste sigurni da želite trajno da obrišete grad?')">
+                            Obriši zauvek
+                        </a>
                     </td>
                 </tr>
             @endforeach
