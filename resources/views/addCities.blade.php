@@ -9,7 +9,7 @@
         <div class="alert alert-danger">
             <ul class="mb-0">
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>ayo
+                    <li>{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
@@ -19,15 +19,16 @@
         @csrf
 
         <div class="mb-3">
-            <label for="city" class="form-label">Ime Grada</label>
-            <input type="text" name="city" class="form-control" placeholder="Grad" value="{{ old('city') }}" required>
+            <label for="name" class="form-label">Ime Grada</label>
+            <input type="text" name="name" class="form-control" placeholder="Grad"
+                   value="{{ old('name') }}" required>
         </div>
 
         <div class="mb-3">
-            <label for="temperatures" class="form-label">Temperatura</label>
-            <input type="number" name="temperatures" id="temperatures" class="form-control"
+            <label for="temperature" class="form-label">Temperatura</label>
+            <input type="number" name="temperature" id="temperature" class="form-control"
                    placeholder="Unesi temperaturu"
-                   value="{{ old('temperatures') }}" required>
+                   value="{{ old('temperature') }}" required>
         </div>
 
 
