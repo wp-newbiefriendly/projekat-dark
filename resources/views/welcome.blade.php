@@ -9,5 +9,4 @@
         <h1 class="text-center mb-4">Home</h1>
         <p class="text-center">Dobrodosli na Home stranicu</p>
 
-
 @endsection

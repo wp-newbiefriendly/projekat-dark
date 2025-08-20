@@ -5,7 +5,8 @@
         <a class="logo-prognoza navbar-brand mb-0 h1" href="/">Prognoza Sajt</a>
 
         <!-- Toggler (za mobilni meni) -->
-        <button class="navbar-toggler order-1 mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler order-1 mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
+                aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -14,7 +15,8 @@
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="/admin/cities">🛠 Admin</a></li>
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/prognoza"><i class="fas fa-sun text-warning"></i>   Prognoza</a></li>
+                <li class="nav-item"><a class="nav-link" href="/prognoza"><i class="fas fa-sun text-warning"></i>
+                        Prognoza</a></li>
             </ul>
         </div>
 
@@ -31,7 +33,8 @@
                 <a href="{{ route('register') }}" class="btn btn-sm btn-light">Register</a>
             @endauth
 
-            <a href="https://github.com/wp-newbiefriendly/projekat-dark" target="_blank" class="text-white text-decoration-underline">
+            <a href="https://github.com/wp-newbiefriendly/projekat-dark" target="_blank"
+               class="text-white text-decoration-underline">
                 GITHUB <i class="bi bi-github"></i>
             </a>
         </div>

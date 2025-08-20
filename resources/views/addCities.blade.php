@@ -25,7 +25,8 @@
 
         <div class="mb-3">
             <label for="temperatures" class="form-label">Temperatura</label>
-            <input type="number" name="temperatures" id="temperatures" class="form-control" placeholder="Unesi temperaturu"
+            <input type="number" name="temperatures" id="temperatures" class="form-control"
+                   placeholder="Unesi temperaturu"
                    value="{{ old('temperatures') }}" required>
         </div>
 

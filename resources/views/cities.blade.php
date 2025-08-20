@@ -69,6 +69,4 @@
         </table>
     @endif
 
-
-
 @endsection
