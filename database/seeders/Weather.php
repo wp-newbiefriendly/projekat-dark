@@ -12,7 +12,7 @@ class Weather extends Seeder
 {
     // NAPOMENA:
     // Nisam napravio Novi seeder UserWeatherSeeder - ovaj postojeci smo izmenili da bude kao vezba "UserWeatherSeeder"
-    // Novi je BulkWeatherSeeder za dodavanje ispisanih podataka GRAD i TEMPERATURA iz varijable u bazu
+
     public function run(): void
     {
       $cities = DB::table("cities")->get();
