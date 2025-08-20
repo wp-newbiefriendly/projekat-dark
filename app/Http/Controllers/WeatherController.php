@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CitiesModel;
 use App\Models\WeatherModel;
 use Illuminate\Http\Request;
 
@@ -32,13 +33,20 @@ class WeatherController extends Controller
     public function storeCity(Request $request)
     {
         $request->validate([
-            'city_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'temperature' => 'nullable|numeric|min:-50|max:50',
         ]);
+        // prvo sačuvaj u tabelu cities
+        $city = new CitiesModel();
+        $city->name = $request->name;
+        $city->save();
+        // zatim dodaj temperaturu u weather i poveži sa city_id
+        $weather = new WeatherModel();
+        $weather->city_id = $city->id;
+        $weather->temperature = $request->temperature;
+        $weather->save();
 
-        WeatherModel::create($request->all());
-
-        return redirect()->route(route: "cities")->with('success', 'Grad dodat!');
+        return redirect('/admin/cities')->with('success', 'Grad uspesno dodat!');
     }
 
     public function showEditCityForm(WeatherModel $cities)
@@ -71,15 +79,24 @@ class WeatherController extends Controller
         session()->put('undoCity', $singleCity->id);
         return redirect()->back();
     }
+    public function forceDeleteCity($id)
+    {
+        $city = WeatherModel::withTrashed()->findOrFail($id);
+        $city->forceDelete(); // briše zauvek
+
+        return redirect()->back()->with('success', 'Grad trajno obrisan!');
+    }
 
     public function undoCity($id)
     {
-        $weather = WeatherModel::withTrashed()->findOrFail($id);
+        $cities = WeatherModel::withTrashed()->with('city')->findOrFail($id);
 
-        if ($weather->trashed()) {
-            $weather->restore();
+        if ($cities->trashed()) {
+            $cities->restore();
         }
 
-        return redirect()->route('cities')->with('success', 'Grad je vraćen!');
+        return redirect()->route('cities')
+            ->with("success", "Grad '{$cities->city->name}' je vraćen!");
     }
+
 }
