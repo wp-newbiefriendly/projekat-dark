@@ -12,5 +12,11 @@ class WeatherModel extends Model
     protected $table = "weather";
 
     protected $fillable =
-        ['city', 'temperatures'];
+        ['city_id', 'temperature'];
+
+    public function city()
+    {
+        return $this->hasOne(related: CitiesModel::class, foreignKey: "id", localKey: "city_id");
+    }
 }
+

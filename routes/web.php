@@ -31,16 +31,16 @@ Route::middleware(['auth', AdminCheckMiddleware::class])
         // Azuriraj u bazu 'post'
         Route::post('/add-cities', [WeatherController::class, 'storeCity']);
         // Edit gradove
-        Route::get('/cities/edit/{weather}', [WeatherController::class, 'showEditCityForm'])
+        Route::get('/cities/edit/{cities}', [WeatherController::class, 'showEditCityForm'])
          ->name('editCities');
         // Update nakon edit gradove
-        Route::put('/cities/update/{weather}', [WeatherController::class, 'updateCity'])
+        Route::put('/cities/update/{cities}', [WeatherController::class, 'updateCity'])
         ->name('updateCities');
         // Izbrisi grad
-        Route::get('/cities/delete/{weather}', [WeatherController::class, 'deleteCity'])
+        Route::get('/cities/delete/{cities}', [WeatherController::class, 'deleteCity'])
             ->name('deleteCities');
         // Undo grad
-        Route::get('/cities/undo/{weather}', [WeatherController::class, 'undoCity']);
+        Route::get('/cities/undo/{cities}', [WeatherController::class, 'undoCity']);
 
 
     });

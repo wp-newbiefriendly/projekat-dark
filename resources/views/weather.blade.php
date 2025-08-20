@@ -9,11 +9,11 @@
         <hr class="solid">
 
         <div class="container mt-5">
-            <ul class="list-group list-group-horizontal justify-content-center">
-                @foreach($weather as $weather)
-                    <li class="list-group-item">
-                        <i class="fas fa-sun text-warning"></i>
-                        {{ $weather->city }} {{ $weather->temperatures }}°C
+            <ul class="list-group list-group-horizontal justify-content-center flex-wrap">
+                @foreach($prognoza->take(100) as $weather)
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-sun text-warning me-2"></i>
+                        {{ $weather->city->name }} {{ $weather->temperature }}°C
                     </li>
                 @endforeach
             </ul>

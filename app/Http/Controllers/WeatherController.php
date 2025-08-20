@@ -11,17 +11,17 @@ class WeatherController extends Controller
     public function showWeather()
     {
         $perPage = request('per_page', 10); // default 10
-        $weather = WeatherModel::paginate($perPage);
-
+        $cities = WeatherModel::with('city')->paginate($perPage);
         $trashedWeather = WeatherModel::onlyTrashed()->get(); // obrisani
 
-        return view('cities', compact('weather', 'trashedWeather'));
+        return view('cities', compact('cities', 'trashedWeather'));
     }
+
 
     public function allShowWeather()
     {
-        $weather = WeatherModel::all();
-        return view('weather', compact('weather'));
+        $prognoza = WeatherModel::all();
+        return view('weather', compact('prognoza'));
     }
 
     public function showAddCityForm()
@@ -32,8 +32,8 @@ class WeatherController extends Controller
     public function storeCity(Request $request)
     {
         $request->validate([
-            'city' => 'required|unique:weather|max:255',
-            'temperatures' => 'nullable|numeric|min:-50|max:50'
+            'city_name' => 'required|string|max:255',
+            'temperature' => 'nullable|numeric|min:-50|max:50',
         ]);
 
         WeatherModel::create($request->all());
@@ -41,29 +41,31 @@ class WeatherController extends Controller
         return redirect()->route(route: "cities")->with('success', 'Grad dodat!');
     }
 
-    public function showEditCityForm(WeatherModel $weather)
+    public function showEditCityForm(WeatherModel $cities)
     {
-        return view('editCities', compact('weather'));
+        return view('editCities', compact('cities'));
     }
 
-    public function updateCity(Request $request, WeatherModel $weather)
+    public function updateCity(Request $request, WeatherModel $cities)
     {
         $request->validate([
-            'city' => 'required|unique:weather,city,' . $weather->id . '|max:255',
-            'temperatures' => 'nullable|numeric|min:-50|max:50',
+            'city_name' => 'required|string|max:255',
+            'temperature' => 'nullable|numeric|min:-50|max:50',
         ]);
 
-        $weather->city = $request->city;
-        $weather->temperatures = $request->temperatures;
-        $weather->save();
+        $city = $cities->city;   // pristup relaciji
+        $city->name = $request->city_name;
+        $city->save();
+        $cities->temperature = $request->temperature;
+        $cities->save();
 
         return redirect('/admin/cities')
-            ->with('success', 'Grad ažuriran pod brojem ID: ' . $weather->id);
+            ->with('success', 'Grad ažuriran pod brojem ID: ' . $cities->city_id);
     }
 
-    public function deleteCity($weather)
+    public function deleteCity($cities)
     {
-        $singleCity = WeatherModel::findOrFail($weather);
+        $singleCity = WeatherModel::findOrFail($cities);
         $singleCity->delete();
 
         session()->put('undoCity', $singleCity->id);
