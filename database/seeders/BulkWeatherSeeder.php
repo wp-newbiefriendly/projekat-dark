@@ -22,7 +22,7 @@ class BulkWeatherSeeder extends Seeder
                 ["city" => $city],
                 ["temperatures" => $temperatures]
             );
-        // Info - Uspesno, Error - Vec postoji
+            // Info - Uspesno, Error - Vec postoji
             if ($weather->wasRecentlyCreated) {
                 $this->command->info("Grad '$city' uspešno dodat.");
             } else {

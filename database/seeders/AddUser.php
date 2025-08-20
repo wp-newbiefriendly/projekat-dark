@@ -38,11 +38,11 @@ class AddUser extends Seeder
         $role = $this->command->ask("Unesite role (admin ili user)");
         if (empty($role)) {
             $this->command->error("Niste uneli role!");
-                return;
+            return;
         }
-            if (!in_array($role, ['admin', 'user'])) {
-                $this->command->error("Role mora biti admin ili user");
-                return;
+        if (!in_array($role, ['admin', 'user'])) {
+            $this->command->error("Role mora biti admin ili user");
+            return;
         }
 
         User::create([

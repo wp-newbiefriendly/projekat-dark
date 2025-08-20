@@ -25,7 +25,7 @@ class AddCitiesToCities extends Seeder
             'Malaga', 'Manchester', 'Marseille', 'Montpellier', 'Nicosia', 'Nuremberg',
             'Palermo', 'Poznan', 'Salzburg', 'Sheffield', 'Stuttgart', 'Tallaght',
             'Toulouse', 'Trieste', 'Utrecht', 'Valletta', 'Verona', 'Vilvoorde',
-            'Wroclaw', 'Zaragoza','Subotica', 'Nis', 'Zajecar', 'Bor'
+            'Wroclaw', 'Zaragoza', 'Subotica', 'Nis', 'Zajecar', 'Bor'
         ];
 
         $count = count($cities);
@@ -38,11 +38,11 @@ class AddCitiesToCities extends Seeder
             ]);
 
             // progress bar
-            $progress = intval((($index+1) / $count) * 50); // 50 znakova širina
+            $progress = intval((($index + 1) / $count) * 50); // 50 znakova širina
             $bar = str_repeat("█", $progress) . str_repeat(" ", 50 - $progress);
-            $percent = round((($index+1)/$count)*100);
+            $percent = round((($index + 1) / $count) * 100);
 
-            echo "\r[".$bar."] $percent% ($index/$count)";
+            echo "\r[" . $bar . "] $percent% ($index/$count)";
         }
 
         echo "\n✅ Ubaceno ukupno $count gradova u tabelu cities.\n";

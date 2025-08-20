@@ -12,23 +12,23 @@ class Weather extends Seeder
 
     public function run(): void
     {
-      $cities = DB::table("cities")->get();
+        $cities = DB::table("cities")->get();
 
-        $count  = $cities->count();
+        $count = $cities->count();
 
         foreach ($cities as $index => $city) {
-          DB::table("weather")->insert([
-              'city_id' => $city->id,
-              'temperature' => rand(20, 35), // trenutna random temperatura
-              'created_at' => now(),
-              'updated_at' => now(),
-          ]);
+            DB::table("weather")->insert([
+                'city_id' => $city->id,
+                'temperature' => rand(20, 35), // trenutna random temperatura
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
-      }
-        $progress = intval((($index+1) / $count) * 50);
-        $bar      = str_repeat("█", $progress) . str_repeat(" ", 50 - $progress);
-        $percent  = round((($index+1)/$count)*100);
+        }
+        $progress = intval((($index + 1) / $count) * 50);
+        $bar = str_repeat("█", $progress) . str_repeat(" ", 50 - $progress);
+        $percent = round((($index + 1) / $count) * 100);
 
-        echo "\r[".$bar."] $percent% | ".$city->name." ($index/$count)";
+        echo "\r[" . $bar . "] $percent% | " . $city->name . " ($index/$count)";
     }
 }
