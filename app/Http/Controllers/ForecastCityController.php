@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class ForecastCityController extends Controller
 {
     public function forecastCity($city)
@@ -12,10 +10,10 @@ class ForecastCityController extends Controller
 
         // Naš niz gradova sa prognozom za 5 dana
         $prognoza = [
-            "Beograd"  => [22, 24, 25, 20, 18],
+            "Beograd" => [22, 24, 25, 20, 18],
             "Sarajevo" => [20, 24, 22, 22, 25],
-            "Nis"      => [30, 31, 29, 28, 27],
-            "Zajecar"  => [32, 30, 28, 29, 31],
+            "Nis" => [30, 31, 29, 28, 27],
+            "Zajecar" => [32, 30, 28, 29, 31],
         ];
 
         // Provera da li grad postoji

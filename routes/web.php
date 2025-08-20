@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\ForecastCityController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\AdminCheckMiddleware;
 use App\Http\Controllers\WeatherController;
+use App\Http\Middleware\AdminCheckMiddleware;
+use Illuminate\Support\Facades\Route;
 
 // Stranice za Usere
 Route::get('/', function () {

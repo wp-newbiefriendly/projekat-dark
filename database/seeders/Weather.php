@@ -2,9 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\WeatherModel;
-use Faker\Factory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +15,6 @@ class Weather extends Seeder
       $cities = DB::table("cities")->get();
 
         $count  = $cities->count();
-
 
         foreach ($cities as $index => $city) {
           DB::table("weather")->insert([
