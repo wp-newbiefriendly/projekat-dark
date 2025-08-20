@@ -39,6 +39,9 @@ Route::middleware(['auth', AdminCheckMiddleware::class])
         // Izbrisi grad
         Route::get('/cities/delete/{cities}', [WeatherController::class, 'deleteCity'])
             ->name('deleteCities');
+        // Force iz Trashed "delete"
+        Route::get('/cities/force-delete/{id}', [WeatherController::class, 'forceDeleteCity'])
+            ->name('forceDeleteCity');
         // Undo grad
         Route::get('/cities/undo/{cities}', [WeatherController::class, 'undoCity']);
 
