@@ -15,7 +15,6 @@ class ForecastSeeder extends Seeder
 
         // 2. Brojimo koliko ukupno ima gradova (koristi se za progress bar)
         $count = $cities->count();
-        $type = collect(['sunny', 'rainy', 'snowy'])->random();
 
 
         // 3. Petlja: ide kroz sve gradove, $index = redni broj (0,1,2...), $city = objekat (id, name, ...)
@@ -23,6 +22,7 @@ class ForecastSeeder extends Seeder
 
             // 4. Unutar svakog grada dodajemo 5 prognoza (za 5 različitih dana)
             for ($i = 0; $i < 5; $i++) {
+                $type = collect(['sunny', 'rainy', 'snowy'])->random();
                 DB::table('forecasts')->insert([
                     // spajamo forecast sa gradom preko foreign key-a
                     'city_id' => $city->id,
@@ -31,7 +31,7 @@ class ForecastSeeder extends Seeder
                     'temperature' => rand(25, 35),
 
                     // datum = 22.08.2025 + $i dana
-                    'date' => Carbon::create(2025, 8, 22)->addDays($i)->format('Y-m-d'),
+                    'forecast_date' => Carbon::create(2025, 8, 22)->addDays($i)->format('Y-m-d'),
 
                     // Stanje vremena i verovatnoca padavina - random
                     'weather_type' => $type,
