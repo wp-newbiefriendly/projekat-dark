@@ -9,9 +9,11 @@ class ForecastCityController extends Controller
 {
     public function show(CitiesModel $city)
     {
-        $prognoze = $city->forecasts()
-        ->orderBy('forecast_date', 'asc')
-            ->get(['forecast_date', 'temperature']);
+//        $prognoze = $city->forecasts()
+//        ->orderBy('forecast_date', 'asc')
+//            ->get(['forecast_date', 'temperature']);
+
+        $prognoze = ForecastModel::where(["city_id" => $city->id])->get();
 
         return view('forecast', compact('city','prognoze'));
     }

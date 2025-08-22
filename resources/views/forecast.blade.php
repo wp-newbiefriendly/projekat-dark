@@ -2,7 +2,7 @@
 
 <ul>
     @forelse($prognoze as $f)
-        <li>{{ \Carbon\Carbon::parse($f->forecast_date)->format('d.m.Y') }} → {{ $f->temperature }}°C</li>
+        <li>{{ $f->forecast_date }} → {{ $f->temperature }}°C</li>
     @empty
         <li>Nema prognoza za ovaj grad.</li>
     @endforelse
