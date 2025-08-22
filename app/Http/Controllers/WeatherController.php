@@ -16,7 +16,7 @@ class WeatherController extends Controller
         $cities = CitiesModel::with(['weather'])->paginate($perPage);
         $trashedWeather = WeatherModel::onlyTrashed()->get(); // obrisani
 
-        return view('cities', compact('cities', 'trashedWeather', 'totalCities'));
+        return view('admin.cities', compact('cities', 'trashedWeather', 'totalCities'));
     }
 
 
@@ -28,7 +28,7 @@ class WeatherController extends Controller
 
     public function showAddCityForm()
     {
-        return view('addCities');
+        return view('admin.addCities');
     }
 
     public function storeCity(Request $request)
@@ -52,7 +52,7 @@ class WeatherController extends Controller
 
     public function showEditCityForm(WeatherModel $cities)
     {
-        return view('editCities', compact('cities'));
+        return view('admin.editCities', compact('cities'));
     }
 
     public function updateCity(Request $request, WeatherModel $cities)

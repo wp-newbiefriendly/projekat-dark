@@ -19,19 +19,18 @@ Route::get('/prognoza', [App\Http\Controllers\WeatherController::class, 'allShow
 
 // Stranice za Admine
 Route::middleware(['auth', AdminCheckMiddleware::class])
-    ->prefix('admin')
     ->group(function () {
         // Admin - CitiesTemperatures
         // Svi gradovi
-        Route::get('/cities', [WeatherController::class, 'showWeather'])
+        Route::get('/admin/cities', [WeatherController::class, 'showWeather'])
             ->name('cities');
         // Dodaj gradove
-        Route::get('/add-cities', [WeatherController::class, 'showAddCityForm'])
+        Route::get('/admin/add-cities', [WeatherController::class, 'showAddCityForm'])
             ->name('addCities');
         // Azuriraj u bazu 'post'
-        Route::post('/add-cities', [WeatherController::class, 'storeCity']);
+        Route::post('/admin/add-cities', [WeatherController::class, 'storeCity']);
         // Edit gradove
-        Route::get('/cities/edit/{cities}', [WeatherController::class, 'showEditCityForm'])
+        Route::get('/admin/cities/edit/{cities}', [WeatherController::class, 'showEditCityForm'])
          ->name('editCities');
         // Update nakon edit gradove
         Route::put('/cities/update/{cities}', [WeatherController::class, 'updateCity'])
