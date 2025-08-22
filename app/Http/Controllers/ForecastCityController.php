@@ -2,8 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ForecastModel;
+use App\Models\CitiesModel;
+
 class ForecastCityController extends Controller
 {
+    public function show(string $city)
+    {
+        $cityModel = CitiesModel::where('name', $city)->firstOrFail();
+
+        // Sve prognoze za taj grad, sortirane po datumu (rastuce)
+        $forecasts = $cityModel->forecasts()
+            ->orderBy('forecast_date', 'asc')
+            ->get(['forecast_date', 'temperature']);
+
+        return view('forecast', [
+            'city'      => $cityModel,
+            'forecasts' => $forecasts,
+        ]);
+    }
+
     public function forecastCity($city)
     {
         $city = ucfirst(strtolower($city));

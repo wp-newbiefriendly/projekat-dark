@@ -1,12 +1,9 @@
-<h1>Prognoza za {{ ($city) }}</h1>
+<h1>Prognoza za {{ $city->name }}</h1>
 
-@if($error)
-    <p style="color:red;">{{ $error }}</p>
-@else
-    <ul>
-        @foreach($temperatures as $day => $temp)
-            <li>{{ $days[$day] }}: {{ $temp }}°C</li>
-        @endforeach
-    </ul>
-
-@endif
+<ul>
+    @forelse($forecasts as $f)
+        <li>{{ \Carbon\Carbon::parse($f->forecast_date)->format('d.m.Y') }} → {{ $f->temperature }}°C</li>
+    @empty
+        <li>Nema prognoza za ovaj grad.</li>
+    @endforelse
+</ul>
