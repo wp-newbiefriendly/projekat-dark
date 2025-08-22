@@ -7,19 +7,13 @@ use App\Models\CitiesModel;
 
 class ForecastCityController extends Controller
 {
-    public function show(string $city)
+    public function show(CitiesModel $city)
     {
-        $cityModel = CitiesModel::where('name', $city)->firstOrFail();
-
-        // Sve prognoze za taj grad, sortirane po datumu (rastuce)
-        $forecasts = $cityModel->forecasts()
-            ->orderBy('forecast_date', 'asc')
+        $prognoze = $city->forecasts()
+        ->orderBy('forecast_date', 'asc')
             ->get(['forecast_date', 'temperature']);
 
-        return view('forecast', [
-            'city'      => $cityModel,
-            'forecasts' => $forecasts,
-        ]);
+        return view('forecast', compact('city','prognoze'));
     }
 
     public function forecastCity($city)

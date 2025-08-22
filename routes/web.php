@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 //FORECAST
-Route::get('/forecast/{city}', [ForecastCityController::class, 'show']);
+Route::get('/forecast/{city:name}', [ForecastCityController::class, 'show']);
 
 // Auth Stranice:
 // Prognoza
