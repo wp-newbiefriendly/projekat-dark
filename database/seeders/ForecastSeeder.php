@@ -15,6 +15,8 @@ class ForecastSeeder extends Seeder
 
         // 2. Brojimo koliko ukupno ima gradova (koristi se za progress bar)
         $count = $cities->count();
+        $type = collect(['sunny', 'rainy', 'snowy'])->random();
+
 
         // 3. Petlja: ide kroz sve gradove, $index = redni broj (0,1,2...), $city = objekat (id, name, ...)
         foreach ($cities as $index => $city) {
@@ -28,8 +30,12 @@ class ForecastSeeder extends Seeder
                     // nasumična temperatura između 25 i 35
                     'temperature' => rand(25, 35),
 
-                    // datum = 19.08.2025 + $i dana
-                    'date' => Carbon::create(2025, 8, 19)->addDays($i)->format('Y-m-d'),
+                    // datum = 22.08.2025 + $i dana
+                    'date' => Carbon::create(2025, 8, 22)->addDays($i)->format('Y-m-d'),
+
+                    // Stanje vremena i verovatnoca padavina - random
+                    'weather_type' => $type,
+                    'probability' => in_array($type, ['rainy', 'snowy']) ? rand(0, 100) : null,
 
                     // timestampi
                     'created_at' => now(),
