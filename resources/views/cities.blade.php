@@ -19,7 +19,7 @@
         </select>
     </form>
 
-    <h2 class="mb-4">Lista Gradova</h2>
+    <h2 class="mb-4">Lista Gradova ({{ $totalCities }})</h2>
 
     <table class="table table-bordered table-striped">
         <thead>
@@ -66,7 +66,7 @@
                         <a href="{{ url('/admin/cities/undo/'.$trashed->id) }}" class="btn btn-success btn-sm">Vrati</a>
                         <a href="{{ route('forceDeleteCity', $trashed->id) }}"
                            class="btn btn-sm btn-danger"
-                           onclick="return confirm('Da li ste sigurni da želite trajno da obrišete grad?')">
+                           onclick="return confirm('Da li ste sigurni da zelite trajno da obrisete grad?')">
                             Obriši zauvek
                         </a>
                     </td>

@@ -11,11 +11,12 @@ class WeatherController extends Controller
     // Svi + obrisani gradovi
     public function showWeather()
     {
+        $totalCities = WeatherModel::count();
         $perPage = request('per_page', 10); // default 10
         $cities = WeatherModel::with('city')->paginate($perPage);
         $trashedWeather = WeatherModel::onlyTrashed()->get(); // obrisani
 
-        return view('cities', compact('cities', 'trashedWeather'));
+        return view('cities', compact('cities', 'trashedWeather', 'totalCities'));
     }
 
 
