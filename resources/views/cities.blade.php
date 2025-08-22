@@ -21,6 +21,7 @@
 
     <h2 class="mb-4">Lista Gradova ({{ $totalCities }})</h2>
 
+
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -34,7 +35,7 @@
         @foreach($cities as $city)
             <tr>
                 <td>{{ $city->id }}</td>
-                <td>{{ $city->city->name }}</td>
+                <td>{{ $city->name }}</td>
                 <td>{{ $city->temperature }}</td>
                 <td>
                     <a href="{{ route('editCities', $city->id) }}" class="btn btn-sm btn-primary">Izmeni</a>
