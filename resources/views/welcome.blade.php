@@ -2,7 +2,7 @@
     Home
 @endsection
 
-@extends("layout")
+@extends("layouts.layout")
 
 @section("sadrzajstranice")
     <div class="container mt-5">

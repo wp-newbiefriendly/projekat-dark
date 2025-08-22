@@ -36,7 +36,7 @@
             <tr>
                 <td>{{ $city->id }}</td>
                 <td>{{ $city->name }}</td>
-                <td>{{ $city->temperature }}</td>
+                <td>{{ $city->weather->temperature }}</td>
                 <td>
                     <a href="{{ route('editCities', $city->id) }}" class="btn btn-sm btn-primary">Izmeni</a>
                     <a href="{{ route('deleteCities', $city->id) }}" class="btn btn-sm btn-danger">Obriši</a>

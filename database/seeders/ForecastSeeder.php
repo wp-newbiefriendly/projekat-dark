@@ -35,7 +35,7 @@ class ForecastSeeder extends Seeder
 
                     // Stanje vremena i verovatnoca padavina - random
                     'weather_type' => $type,
-                    'probability' => in_array($type, ['rainy', 'snowy']) ? rand(0, 100) : null,
+                    'probability' => in_array($type, ['rainy', 'snowy']) ? rand(1, 100) : null,
 
                     // timestampi
                     'created_at' => now(),
