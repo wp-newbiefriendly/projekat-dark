@@ -13,10 +13,16 @@ class WeatherController extends Controller
     {
         $totalCities = WeatherModel::count();
         $perPage = request('per_page', 10); // default 10
-        $cities = CitiesModel::with(['weather'])->paginate($perPage);
+
+        $sort = request('sort', 'asc'); // default stari -> novi
+
+        $cities = CitiesModel::with('weather')
+            ->orderBy('id', $sort) // OVO dodaje sortiranje
+            ->paginate($perPage);
+
         $trashedWeather = WeatherModel::onlyTrashed()->get(); // obrisani
 
-        return view('admin.cities', compact('cities', 'trashedWeather', 'totalCities'));
+        return view('admin.cities', compact('cities', 'trashedWeather', 'totalCities', 'sort'));
     }
 
 
