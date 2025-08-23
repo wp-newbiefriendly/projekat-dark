@@ -36,15 +36,20 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Lista Gradova ({{ $totalCities }})</h2>
 
-        <form method="POST" action="{{ url('/admin/add-cities') }}"
+        <form action="{{ route('cities.quickUpdate') }}" method="POST"
               class="d-flex align-items-center gap-2 p-2 rounded shadow-sm quick-add-form">
             @csrf
 
-            <label class="fw-bold quick-label me-2 mb-0 h5">➕ Brzo dodavanje grada:</label>
+            <label class="fw-bold quick-label me-2 mb-0 h5">➕ Brzo editovanje grada:</label>
 
-            <input type="text" name="name" class="form-control w-auto" placeholder="Ime grada" required>
+            <select name="city_id" class="form-select form-select-sm w-auto">
+                @foreach ($allCities as $city)
+                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                @endforeach
+            </select>
+
             <input type="number" name="temperature" class="form-control w-auto" placeholder="Temperatura" required>
-            <button type="submit" class="btn btn-success">Dodaj</button>
+            <button type="submit" class="btn btn-success">Snimi temperaturu</button>
         </form>
 
     </div>

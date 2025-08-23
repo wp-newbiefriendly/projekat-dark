@@ -19,11 +19,29 @@ class WeatherController extends Controller
         $cities = CitiesModel::with('weather')
             ->orderBy('id', $sort) // OVO dodaje sortiranje
             ->paginate($perPage);
+        $allCities = CitiesModel::all();
 
         $trashedWeather = WeatherModel::onlyTrashed()->get(); // obrisani
 
-        return view('admin.cities', compact('cities', 'trashedWeather', 'totalCities', 'sort'));
+        return view('admin.cities', compact('cities', 'trashedWeather', 'totalCities', 'sort', 'allCities'));
     }
+    // app/Http/Controllers/CityController.php
+    public function quickUpdate(Request $request)
+    {
+        $data = $request->validate([
+            'city_id'     => 'required|exists:cities,id',
+            'temperature' => 'required|numeric',
+        ]);
+
+        // Ako postoji red za taj grad – UPDATE, inače ga kreiraj
+        WeatherModel::updateOrCreate(
+            ['city_id' => $data['city_id']],
+            ['temperature' => $data['temperature']]
+        );
+
+        return back()->with('success', 'Temperatura sačuvana.');
+    }
+
 
 
     public function allShowWeather()
