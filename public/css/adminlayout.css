@@ -1,4 +1,23 @@
-/* Container */
+/**************************************
+ * 0) OSNOVE & PRESEDANJA
+ * Ovaj fajl treba da se učita POSLE Bootstrap-a.
+ **************************************/
+:root {
+    --bg-dark: #121212;
+    --bg-1: #1e1e1e;
+    --bg-2: #242424;
+    --bg-3: #2a2a2a;
+    --txt-1: #f1f1f1;
+    --txt-2: #ddd;
+    --txt-3: #aaa;
+    --br-1: #333;
+    --br-2: #444;
+    --brand: #0d6efd; /* Bootstrap primary */
+}
+
+/**************************************
+ * 1) DARK-MODE TOGGLE (sun/moon prekidač)
+ **************************************/
 .theme-toggle {
     position: relative;
     display: inline-block;
@@ -7,18 +26,18 @@
     margin: 10px;
 }
 
-/* Hide checkbox */
+/* skrij checkbox */
 .theme-toggle input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-/* Slider */
+/* klizač sa ikonama */
 .slider {
     position: absolute;
     cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
+    inset: 0;
     background-color: #ddd;
     border-radius: 30px;
     transition: background-color 0.4s;
@@ -29,33 +48,33 @@
     font-size: 16px;
 }
 
-/* Ikonice */
-.slider .icon {
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
+.slider .icon { pointer-events: none; transition: opacity 0.3s ease; }
 .slider .moon { opacity: 0; }
-.slider .sun { opacity: 1; }
+.slider .sun  { opacity: 1; }
 
-/* Kada je čekiran */
-.theme-toggle input:checked + .slider {
-    background-color: #333;
-}
+.theme-toggle input:checked + .slider { background-color: #333; }
 .theme-toggle input:checked + .slider .moon { opacity: 1; }
-.theme-toggle input:checked + .slider .sun { opacity: 0; }
+.theme-toggle input:checked + .slider .sun  { opacity: 0; }
 
-/* Dark Mode */
+/**************************************
+ * 2) GLOBALNI DARK MODE
+ **************************************/
 .dark-mode {
-    background-color: #121212;
-    color: #f1f1f1;
+    background-color: var(--bg-dark);
+    color: var(--txt-1);
 }
-.dark-mode .bg-light { background-color: #222 !important; }
-.dark-mode .list-group-item { background-color: #1e1e1e; color: #ddd; }
 
-/* Dark mode za tabele */
+/* svetla pozadina komponenti → potamni */
+.dark-mode .bg-light { background-color: #222 !important; }
+/* list-group u tamnom */
+.dark-mode .list-group-item { background-color: var(--bg-1); color: var(--txt-2); }
+
+/**************************************
+ * 3) TABELA (uključujući striped)
+ **************************************/
 .dark-mode .table {
-    background-color: #1e1e1e !important;
-    color: #f1f1f1 !important;
+    background-color: var(--bg-1) !important;
+    color: var(--txt-1) !important;
 }
 
 .dark-mode .table th {
@@ -64,27 +83,27 @@
 }
 
 .dark-mode .table td {
-    background-color: #242424 !important;
-    color: #ddd !important;
-    border-color: #444 !important;
+    background-color: var(--bg-2) !important;
+    color: var(--txt-2) !important;
+    border-color: var(--br-2) !important;
 }
-/* Striped redovi u dark modu */
-.dark-mode .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #1b1b1b !important;
-}
-.dark-mode .table-striped tbody tr:nth-of-type(even) {
-    background-color: #242424 !important;
-}
-/* Dark mode pagination */
+
+/* pruge */
+.dark-mode .table-striped tbody tr:nth-of-type(odd)  { background-color: #1b1b1b !important; }
+.dark-mode .table-striped tbody tr:nth-of-type(even) { background-color: var(--bg-2) !important; }
+
+/**************************************
+ * 4) PAGINATION
+ **************************************/
 .dark-mode .pagination .page-link {
     color: #fff;
     background-color: #1e1e2f;
-    border: 1px solid #333;
+    border: 1px solid var(--br-1);
 }
 
 .dark-mode .pagination .page-item.active .page-link {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
+    background-color: var(--brand);
+    border-color: var(--brand);
     color: #fff;
 }
 
@@ -92,45 +111,106 @@
     background-color: #333;
     color: #fff;
 }
-/* // Add Quick grad - cities - dark mode */
 
-.dark-mode.card {
-    background-color: #1f1f1f;   /* tamna pozadina */
-    border: 1px solid #333;      /* diskretan border */
+/**************************************
+ * 5) KARTICE (npr. "Brzo dodavanje grada")
+ **************************************/
+.card.quick-add-card { /* opciono dodaj ovu klasu na karticu u Blade-u */
     border-radius: 8px;
-    color: #f1f1f1;
 }
 
-.dark-mode.card h5 {
-    color: #f8f9fa;              /* svetliji naslov */
-    font-weight: 600;
-}
+/* svetla tema */
+.card.quick-add-card { background-color: #f8f9fa; border: 1px solid #ddd; color: #212529; }
+.card.quick-add-card h5 { color: #212529; font-weight: 600; }
+.card.quick-add-card input { background-color: #fff; border: 1px solid #ced4da; color: #212529; }
+.card.quick-add-card input::placeholder { color: #6c757d; }
 
-.dark-mode.card input {
-    background-color: #2a2a2a;
-    border: 1px solid #444;
-    color: #f1f1f1;
+/* tamna tema */
+.dark-mode .card.quick-add-card {
+    background-color: #1f1f1f;
+    border: 1px solid var(--br-1);
+    color: var(--txt-1);
 }
+.dark-mode .card.quick-add-card h5 { color: #f8f9fa; font-weight: 600; }
+.dark-mode .card.quick-add-card input {
+    background-color: var(--bg-3);
+    border: 1px solid var(--br-2);
+    color: var(--txt-1);
+}
+.dark-mode .card.quick-add-card input::placeholder { color: var(--txt-3); }
 
-.dark-mode.card input::placeholder {
-    color: #aaa;
-}
-.quick-add-form {
-    background-color: #f8f9fa; /* light */
-    border: 1px solid #ddd;
-}
-.dark-mode .quick-add-form {
-    background-color: #1e1e1e; /* dark */
-    border: 1px solid #333;
-}
+/**************************************
+ * 6) QUICK-ADD FORMA (reda sa labelom + input + dugme "Dodaj")
+ **************************************/
+.quick-add-form { background-color: #f8f9fa; border: 1px solid #ddd; }
+.dark-mode .quick-add-form { background-color: var(--bg-1); border: 1px solid var(--br-1); }
+
 .quick-add-form input,
-.quick-add-form button {
-    min-width: 140px;
+.quick-add-form button { min-width: 140px; }
+
+.quick-label { white-space: nowrap; min-width: 160px; }
+
+/**************************************
+ * 7) SELECT (Prikaži / Sortiraj)
+ * Target: Bootstrap .form-select i tvoji #per_page, #sort
+ **************************************/
+
+/* zajednički stil za sve select-ove u adminu */
+.form-select {
+    /* light */
+    background-color: #fff;
+    color: #212529;
+    border: 1px solid #ced4da;
+    transition: border-color .2s, box-shadow .2s, background-color .2s, color .2s;
 }
-.quick-label {
-    white-space: nowrap;   /* sprečava prelazak u novi red */
-    min-width: 160px;      /* ili koliko želiš, da se lepo raširi */
+
+/* kompaktna (sm) varijanta */
+.form-select.form-select-sm {
+    padding: 0.25rem 1.75rem 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
 }
 
+/* fokus/hover (light) */
+.form-select:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 .2rem rgba(13,110,253,.25);
+    outline: 0;
+}
 
+/* disabled */
+.form-select:disabled { opacity: .7; cursor: not-allowed; }
 
+/* specifično za ta dva polja */
+#per_page.form-select,
+#sort.form-select {
+    width: auto; /* da ostane kompaktno uz labelu */
+}
+
+/* TAMNA TEMA: svi select-ovi */
+.dark-mode .form-select {
+    background-color: var(--bg-3);
+    color: var(--txt-1);
+    border: 1px solid var(--br-2);
+}
+
+/* TAMNA TEMA: fokus/hover */
+.dark-mode .form-select:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 .2rem rgba(13,110,253,.35);
+}
+
+/* TAMNA TEMA: baš Prikaži/Sortiraj */
+.dark-mode #per_page.form-select,
+.dark-mode #sort.form-select {
+    background-color: var(--bg-3);
+    color: var(--txt-1);
+    border-color: var(--br-2);
+}
+
+/**************************************
+ * 8) SITNE KOREKCIJE (opciono)
+ **************************************/
+/* poravnanje labela/select-a u redovima filter forme */
+.filters-row .form-label { margin-bottom: 0; font-weight: 600; }
+/* ako koristiš .w-auto iz Bootstrapa, ostavi ga – već ima !important */
