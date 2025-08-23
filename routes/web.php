@@ -36,7 +36,7 @@ Route::middleware(['auth', AdminCheckMiddleware::class])
         Route::put('/cities/update/{cities}', [WeatherController::class, 'updateCity'])
         ->name('updateCities');
         // Quick update
-        Route::post('/admin/cities/quick-update', [CityController::class, 'quickUpdate'])
+        Route::post('/admin/cities/quick-update', [WeatherController::class, 'quickUpdate'])
             ->name('cities.quickUpdate');
         // Izbrisi grad
         Route::get('/cities/delete/{cities}', [WeatherController::class, 'deleteCity'])

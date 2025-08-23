@@ -37,7 +37,7 @@
             <a href="/" class="list-group-item list-group-item-action">🏠 Pocetna stranica</a>
             <a href="/prognoza" class="list-group-item list-group-item-action">☀️ Prognoza</a>
             <hr style="margin: 15px 0px 15px;">
-            <a href="/admin/cities" class="list-group-item list-group-item-action">Svi Gradovi</a>
+            <a href="/admin/cities" class="list-group-item list-group-item-action">🏙️ Svi Gradovi</a>
             <a href="/admin/add-cities" class="list-group-item list-group-item-action">➕ Dodaj Grad</a>
             <hr style="margin: 15px 0px 15px;">
         </div>
