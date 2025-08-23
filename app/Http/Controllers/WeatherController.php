@@ -28,18 +28,16 @@ class WeatherController extends Controller
     // app/Http/Controllers/CityController.php
     public function quickUpdate(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'city_id'     => 'required|exists:cities,id',
             'temperature' => 'required|numeric',
         ]);
 
-        // Ako postoji red za taj grad – UPDATE, inače ga kreiraj
-        WeatherModel::updateOrCreate(
-            ['city_id' => $data['city_id']],
-            ['temperature' => $data['temperature']]
-        );
+        $data = WeatherModel::where(['city_id' => $request->get('city_id')])->first();
+        $data->temperature = $request->get('temperature');
+        $data->save();
 
-        return back()->with('success', 'Temperatura sačuvana.');
+        return back()->with('success', 'Azurirano!.');
     }
 
 
