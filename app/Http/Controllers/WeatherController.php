@@ -37,7 +37,7 @@ class WeatherController extends Controller
         $data->temperature = $request->get('temperature');
         $data->save();
 
-        return back()->with('success', 'Azurirano!.');
+        return back()->with('success', 'Azuriran grad "' . $data->city->name . '" sa temperaturom  "' . $data->temperature . '"');
     }
 
 
