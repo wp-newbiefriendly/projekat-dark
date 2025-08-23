@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-//FORECAST
-Route::get('/forecast/{city:name}', [ForecastCityController::class, 'show']);
 
 // Auth Stranice:
 // Prognoza
@@ -24,6 +22,8 @@ Route::middleware(['auth', AdminCheckMiddleware::class])
         // Svi gradovi
         Route::get('/admin/cities', [WeatherController::class, 'showWeather'])
             ->name('cities');
+        //FORECAST
+        Route::get('/admin/forecast/', [ForecastCityController::class, 'show']);
         // Dodaj gradove
         Route::get('/admin/add-cities', [WeatherController::class, 'showAddCityForm'])
             ->name('addCities');
