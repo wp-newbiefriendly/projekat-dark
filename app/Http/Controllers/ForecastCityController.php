@@ -14,11 +14,10 @@ class ForecastCityController extends Controller
         // Dodat: Sort, PerPage, WeatherType, allcities sa forecast relacijom za "forecast.blade"
         $sort = request('sort', 'asc'); // default stari -> novi
         $perPage = request('per_page', 12); // default 10
-        $weatherTypes = ['sunny', 'rainy', 'snowy'];
         $allCities = CitiesModel::with('forecasts')
             ->orderBy('id', $sort) // OVO dodaje sortiranje
             ->paginate($perPage);
-        return view('admin.forecast', compact('city','allCities', 'sort', 'weatherTypes'));
+        return view('admin.forecast', compact('city','allCities', 'sort'));
     }
     public function update(Request $request)
     {

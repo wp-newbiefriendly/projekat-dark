@@ -50,7 +50,7 @@
                 <input type="number" name="temperature" class="form-control form-control-sm w-auto" placeholder="Temperatura" required>
 
                 <select name="weather_type" class="form-select form-select-sm w-auto" required>
-                    @foreach ($weatherTypes as $weathertype)
+                    @foreach (\App\Models\ForecastModel::WEATHERS as $weathertype)
                         <option value="{{ $weathertype }}">{{ ucfirst($weathertype) }}</option>
                     @endforeach
                 </select>
