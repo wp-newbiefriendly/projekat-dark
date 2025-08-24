@@ -16,7 +16,6 @@ class ForecastCityController extends Controller
     }
     public function update(Request $request)
     {
-
         $request->validate([
             'city_id'     => 'required|exists:cities,id',
             'temperature' => 'required|numeric',

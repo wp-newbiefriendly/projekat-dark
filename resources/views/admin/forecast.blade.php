@@ -1,4 +1,4 @@
-<form action="{{ route('cities.quickUpdate') }}" method="POST"
+<form action="{{ route('forecast.update') }}" method="POST"
       class="d-flex align-items-center gap-2 p-2 rounded shadow-sm quick-add-form">
     @csrf
 
