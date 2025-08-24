@@ -50,9 +50,9 @@
                 <input type="number" name="temperature" class="form-control form-control-sm w-auto" placeholder="Temperatura" required>
 
                 <select name="weather_type" class="form-select form-select-sm w-auto" required>
-                    <option value="sunny">Sunny</option>
-                    <option value="rainy">Rainy</option>
-                    <option value="snowy">Snowy</option>
+                    @foreach ($weatherTypes as $weathertype)
+                        <option value="{{ $weathertype }}">{{ ucfirst($weathertype) }}</option>
+                    @endforeach
                 </select>
 
                 <input type="number" name="probability" class="form-control form-control-sm w-auto" placeholder="Šansa padavina" required>
