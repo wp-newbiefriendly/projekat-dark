@@ -214,3 +214,40 @@
 /* poravnanje labela/select-a u redovima filter forme */
 .filters-row .form-label { margin-bottom: 0; font-weight: 600; }
 /* ako koristiš .w-auto iz Bootstrapa, ostavi ga – već ima !important */
+
+/* *************************************/
+ /* === FORECAST KARTICE (samo DARK) === */
+ /***************************************/
+.dark-mode .forecast-card{
+    background-color: var(--bg-1);
+    border: 1px solid var(--br-1);
+    box-shadow: none;
+}
+.dark-mode .forecast-card .card-header{
+    background-color: var(--bg-2);
+    color: var(--txt-1);
+    border-bottom: 1px solid var(--br-1);
+}
+.dark-mode .forecast-list li{
+    color: var(--txt-2);
+    border-bottom: 1px dashed var(--br-2);
+}
+.dark-mode .forecast-list li:last-child{ border-bottom: none; }
+
+/* bedževi: broj stavki (desno u headeru) i temperatura */
+.dark-mode .count-badge{
+    background: #222;
+    color: var(--txt-2);
+    border: 1px solid var(--br-2);
+    border-radius: 999px;
+    padding: .1rem .45rem;
+    font-size: .75rem;
+}
+.dark-mode .temp-badge{
+    background: var(--brand);
+    color: #fff;
+    border-radius: 999px;
+    padding: .15rem .45rem;
+    font-weight: 600;
+    font-size: .8rem;
+}

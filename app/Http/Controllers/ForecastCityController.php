@@ -11,16 +11,20 @@ class ForecastCityController extends Controller
 {
     public function show(CitiesModel $city)
     {
-        $allCities = CitiesModel::with('forecasts')->get();
-        return view('admin.forecast', compact('city','allCities'));
+        $sort = request('sort', 'asc'); // default stari -> novi
+        $perPage = request('per_page', 12); // default 10
+        $allCities = CitiesModel::with('forecasts')
+            ->orderBy('id', $sort) // OVO dodaje sortiranje
+            ->paginate($perPage);
+        return view('admin.forecast', compact('city','allCities', 'sort'));;
     }
     public function update(Request $request)
     {
         $request->validate([
             'city_id'     => 'required|exists:cities,id',
-            'temperature' => 'required|numeric',
+            'temperature' => 'required|numeric|min:-50|max:50|',
             'weather_type' => 'required|string',
-            'probability' => 'required|numeric',
+            'probability' => 'numeric|min:0|max:100',
             'forecast_date' => 'required|date',
         ]);
 

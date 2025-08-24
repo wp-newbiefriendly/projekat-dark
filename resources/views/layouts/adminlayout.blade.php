@@ -39,6 +39,7 @@
             <hr style="margin: 15px 0px 15px;">
             <a href="/admin/cities" class="list-group-item list-group-item-action">🏙️ Svi Gradovi</a>
             <a href="/admin/add-cities" class="list-group-item list-group-item-action">➕ Dodaj Grad</a>
+            <a href="/admin/forecast" class="list-group-item list-group-item-action">➕ Forecast</a>
             <hr style="margin: 15px 0px 15px;">
         </div>
     </div>
