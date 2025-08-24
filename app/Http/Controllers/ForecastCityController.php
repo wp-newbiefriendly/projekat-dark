@@ -4,12 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\ForecastModel;
 use App\Models\CitiesModel;
+use App\Models\WeatherModel;
+use Illuminate\Http\Request;
 
 class ForecastCityController extends Controller
 {
     public function show(CitiesModel $city)
     {
-        return view('forecast', compact('city',));
+        $allCities = CitiesModel::with('forecasts')->get();
+        return view('admin.forecast', compact('city','allCities'));
+    }
+    public function update(Request $request)
+    {
+
+        $request->validate([
+            'city_id'     => 'required|exists:cities,id',
+            'temperature' => 'required|numeric',
+            'weather_type' => 'required|string',
+            'probability' => 'required|numeric',
+            'forecast_date' => 'required|date',
+        ]);
+
+        $alldata = ForecastModel::where(['city_id' => $request->get('city_id')])->first();
+        $alldata->temperature = $request->get('temperature');
+        $alldata->weather_type = $request->get('weather_type');
+        $alldata->probability = $request->get('probability');
+        $alldata->forecast_date = $request->get('forecast_date');
+        $alldata->save();
+
+        return back()->with('success', 'Azurirano');
     }
 
     public function forecastCity($city)
