@@ -29,14 +29,9 @@ class ForecastCityController extends Controller
             'forecast_date' => 'required|date',
         ]);
 
-        $alldata = ForecastModel::where(['city_id' => $request->get('city_id')])->first();
-        $alldata->temperature = $request->get('temperature');
-        $alldata->weather_type = $request->get('weather_type');
-        $alldata->probability = $request->get('probability');
-        $alldata->forecast_date = $request->get('forecast_date');
-        $alldata->save();
+        ForecastModel::create($request->all());
 
-        return back()->with('success', 'Azurirano');
+        return redirect()->back();
     }
 
     public function forecastCity($city)
