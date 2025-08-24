@@ -25,7 +25,7 @@ Route::middleware(['auth', AdminCheckMiddleware::class])
         //FORECAST
         Route::get('/admin/forecast', [ForecastCityController::class, 'show']);
         Route::post('/admin/forecast/update', [ForecastCityController::class, 'update'])
-            ->name('forecast.update');
+            ->name('forecasts.update');
         // END FORECAST
         // Dodaj gradove
         Route::get('/admin/add-cities', [WeatherController::class, 'showAddCityForm'])

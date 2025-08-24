@@ -35,7 +35,7 @@
         <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
             <h2 class="mb-0">Lista prognoza</h2>
 
-            <form action="{{ route('forecast.update') }}" method="POST"
+            <form action="{{ route('forecasts.update') }}" method="POST"
                   class="quick-add-form d-flex flex-wrap align-items-center gap-2 p-2 rounded shadow-sm border">
                 @csrf
 

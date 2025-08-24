@@ -11,6 +11,7 @@ class ForecastCityController extends Controller
 {
     public function show(CitiesModel $city)
     {
+        // Dodat: Sort, PerPage, WeatherType, allcities sa forecast relacijom za "forecast.blade"
         $sort = request('sort', 'asc'); // default stari -> novi
         $perPage = request('per_page', 12); // default 10
         $weatherTypes = ['sunny', 'rainy', 'snowy'];
