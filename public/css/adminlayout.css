@@ -241,6 +241,7 @@
     font-weight: 600;
     font-size: .8rem;
     color: #fff;
+    background: var(--temp-color); /* OVO koristi varijablu iz inline style */
 }
 /* Light mode temperature states */
 .temp-badge.temp-cold  { background: #cce5ff; color: #003366; }
@@ -262,6 +263,7 @@
     font-weight: 600;
     font-size: .8rem;
     color: #fff;
+    background: var(--temp-color); /* OVO koristi varijablu iz inline style */
 }
 
 /* Temperature states */

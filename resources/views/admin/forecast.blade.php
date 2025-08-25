@@ -16,7 +16,7 @@
             <div class="d-flex align-items-center gap-2">
                 <label for="per_page" class="fw-bold mb-0">Prikaži:</label>
                 <select name="per_page" id="per_page" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
-                    <option value="12"  {{ request('per_page') == 12  ? 'selected' : '' }}>10</option>
+                    <option value="12"  {{ request('per_page') == 12  ? 'selected' : '' }}>12</option>
                     <option value="24"  {{ request('per_page') == 24  ? 'selected' : '' }}>24</option>
                     <option value="120" {{ request('per_page') == 120 ? 'selected' : '' }}>120</option>
                 </select>
@@ -42,7 +42,7 @@
                 <span class="fw-bold me-1">➕ Brzo editovanje:</span>
 
                 <select name="city_id" class="form-select form-select-sm w-auto">
-                    @foreach ($allCities as $city)
+                    @foreach ($totalCities as $city)
                         <option value="{{ $city->id }}">{{ $city->name }}</option>
                     @endforeach
                 </select>
@@ -77,9 +77,9 @@
                                 @forelse ($city->forecasts ?? collect() as $forecast)
                                     <li class="d-flex justify-content-between">
                                         <span>{{ \Illuminate\Support\Carbon::parse($forecast->forecast_date)->toDateString() }}</span>
-                                        <span class="temp-badge {{ $forecast->temp_class }}">
-                                         {{ $forecast->temperature }}°
-                                        </span>
+                                        <span class="temp-badge" style="--temp-color: {{ \App\Http\ForecastHelper::getColorByTemperature($forecast->temperature) }}">
+                                        {{ $forecast->temperature }}°
+                                      </span>
                                     </li>
                                 @empty
                                     <li class="text-muted">Nema prognoza.</li>
