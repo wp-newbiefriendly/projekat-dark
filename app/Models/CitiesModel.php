@@ -19,7 +19,8 @@ class CitiesModel extends Model
     // Jedan grad ima vise prognoza (forecasts) - city_id, temperature, date
     public function forecasts()
     {
-        return $this->hasMany(ForecastModel::class, 'city_id');
+        return $this->hasMany(ForecastModel::class, 'city_id')
+            ->orderBy('forecast_date', 'asc'); // datumi sortirani unutar grada
     }
 
 }
