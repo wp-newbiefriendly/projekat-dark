@@ -20,7 +20,7 @@ class CitiesModel extends Model
     public function forecasts()
     {
         return $this->hasMany(ForecastModel::class, 'city_id')
-            ->orderBy('forecast_date', 'asc'); // datumi sortirani unutar grada
+            ->orderBy('forecast_date'); // datumi sortirani unutar grada
     }
 
 }
