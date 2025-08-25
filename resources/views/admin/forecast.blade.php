@@ -17,8 +17,8 @@
                 <label for="per_page" class="fw-bold mb-0">Prikaži:</label>
                 <select name="per_page" id="per_page" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
                     <option value="12"  {{ request('per_page') == 12  ? 'selected' : '' }}>10</option>
-                    <option value="50"  {{ request('per_page') == 50  ? 'selected' : '' }}>50</option>
-                    <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                    <option value="24"  {{ request('per_page') == 24  ? 'selected' : '' }}>24</option>
+                    <option value="120" {{ request('per_page') == 120 ? 'selected' : '' }}>120</option>
                 </select>
             </div>
 

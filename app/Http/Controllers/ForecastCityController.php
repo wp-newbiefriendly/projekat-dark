@@ -31,7 +31,7 @@ class ForecastCityController extends Controller
 
         ForecastModel::create($request->all());
 
-        return redirect()->back();
+        return back()->with('success', 'Azurirano');
     }
 
     public function forecastCity($city)
