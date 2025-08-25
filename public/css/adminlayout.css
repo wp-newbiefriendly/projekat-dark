@@ -1,273 +1,123 @@
 /**************************************
- * 0) OSNOVE & PRESEDANJA
- * Ovaj fajl treba da se učita POSLE Bootstrap-a.
+ * 0) VARIJABLE & NAPOMENA
+ * UČITATI POSLE Bootstrap-a.
  **************************************/
 :root {
-    --bg-dark: #121212;
-    --bg-1: #1e1e1e;
-    --bg-2: #242424;
-    --bg-3: #2a2a2a;
-    --txt-1: #f1f1f1;
-    --txt-2: #ddd;
-    --txt-3: #aaa;
-    --br-1: #333;
-    --br-2: #444;
-    --brand: #0d6efd; /* Bootstrap primary */
+    --bg-dark:#121212;
+    --bg-1:#1e1e1e; --bg-2:#242424; --bg-3:#2a2a2a;
+    --txt-1:#f1f1f1; --txt-2:#ddd; --txt-3:#aaa;
+    --br-1:#333; --br-2:#444;
+    --brand:#0d6efd; /* Bootstrap primary */
 }
 
 /**************************************
- * 1) DARK-MODE TOGGLE (sun/moon prekidač)
+ * 1) DARK-MODE TOGGLE (sun/moon)
  **************************************/
-.theme-toggle {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 30px;
-    margin: 10px;
+.theme-toggle{position:relative;display:inline-block;width:60px;height:30px;margin:10px}
+.theme-toggle input{opacity:0;width:0;height:0}
+.slider{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;
+    padding:0 6px;cursor:pointer;background:#ddd;border-radius:30px;transition:background-color .4s;font-size:16px
 }
-
-/* skrij checkbox */
-.theme-toggle input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-/* klizač sa ikonama */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background-color: #ddd;
-    border-radius: 30px;
-    transition: background-color 0.4s;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 6px;
-    font-size: 16px;
-}
-
-.slider .icon { pointer-events: none; transition: opacity 0.3s ease; }
-.slider .moon { opacity: 0; }
-.slider .sun  { opacity: 1; }
-
-.theme-toggle input:checked + .slider { background-color: #333; }
-.theme-toggle input:checked + .slider .moon { opacity: 1; }
-.theme-toggle input:checked + .slider .sun  { opacity: 0; }
+.slider .icon{pointer-events:none;transition:opacity .3s}
+.slider .moon{opacity:0}.slider .sun{opacity:1}
+.theme-toggle input:checked + .slider{background:#333}
+.theme-toggle input:checked + .slider .moon{opacity:1}
+.theme-toggle input:checked + .slider .sun{opacity:0}
 
 /**************************************
- * 2) GLOBALNI DARK MODE
+ * 2) GLOBALNI DARK PRESETI
  **************************************/
-.dark-mode {
-    background-color: var(--bg-dark);
-    color: var(--txt-1);
-}
-
-/* svetla pozadina komponenti → potamni */
-.dark-mode .bg-light { background-color: #222 !important; }
-/* list-group u tamnom */
-.dark-mode .list-group-item { background-color: var(--bg-1); color: var(--txt-2); }
+.dark-mode{background:var(--bg-dark);color:var(--txt-1)}
+.dark-mode .bg-light{background:#222 !important}
+.dark-mode .list-group-item{background:var(--bg-1);color:var(--txt-2)}
 
 /**************************************
- * 3) TABELA (uključujući striped)
+ * 3) TABELE (uklj. striped) — DARK
  **************************************/
-.dark-mode .table {
-    background-color: var(--bg-1) !important;
-    color: var(--txt-1) !important;
-}
-
-.dark-mode .table th {
-    background-color: #2a2a2a !important;
-    color: #fff !important;
-}
-
-.dark-mode .table td {
-    background-color: var(--bg-2) !important;
-    color: var(--txt-2) !important;
-    border-color: var(--br-2) !important;
-}
-
-/* pruge */
-.dark-mode .table-striped tbody tr:nth-of-type(odd)  { background-color: #1b1b1b !important; }
-.dark-mode .table-striped tbody tr:nth-of-type(even) { background-color: var(--bg-2) !important; }
+.dark-mode .table{background:var(--bg-1)!important;color:var(--txt-1)!important}
+.dark-mode .table th{background:#2a2a2a!important;color:#fff!important}
+.dark-mode .table td{background:var(--bg-2)!important;color:var(--txt-2)!important;border-color:var(--br-2)!important}
+.dark-mode .table-striped tbody tr:nth-of-type(odd){background:#1b1b1b!important}
+.dark-mode .table-striped tbody tr:nth-of-type(even){background:var(--bg-2)!important}
 
 /**************************************
- * 4) PAGINATION
+ * 4) PAGINACIJA — DARK
  **************************************/
-.dark-mode .pagination .page-link {
-    color: #fff;
-    background-color: #1e1e2f;
-    border: 1px solid var(--br-1);
-}
+.dark-mode .pagination .page-link{color:#fff;background:#1e1e2f;border:1px solid var(--br-1)}
+.dark-mode .pagination .page-item.active .page-link{background:var(--brand);border-color:var(--brand);color:#fff}
+.dark-mode .pagination .page-link:hover{background:#333;color:#fff}
 
-.dark-mode .pagination .page-item.active .page-link {
-    background-color: var(--brand);
-    border-color: var(--brand);
-    color: #fff;
-}
+/**************************************
+ * 5) QUICK-ADD KARTICA + FORMA
+ **************************************/
+/* kartica (opciona klasa na card-u) */
+.card.quick-add-card{border-radius:8px;background:#f8f9fa;border:1px solid #ddd;color:#212529}
+.card.quick-add-card h5{color:#212529;font-weight:600}
+.card.quick-add-card input{background:#fff;border:1px solid #ced4da;color:#212529}
+.card.quick-add-card input::placeholder{color:#6c757d}
+/* dark varijanta */
+.dark-mode .card.quick-add-card{background:#1f1f1f;border:1px solid var(--br-1);color:var(--txt-1)}
+.dark-mode .card.quick-add-card h5{color:#f8f9fa}
+.dark-mode .card.quick-add-card input{background:var(--bg-3);border:1px solid var(--br-2);color:var(--txt-1)}
+.dark-mode .card.quick-add-card input::placeholder{color:var(--txt-3)}
 
-.dark-mode .pagination .page-link:hover {
-    background-color: #333;
-    color: #fff;
+/* red sa brzim editovanjem */
+.quick-add-form{background:#f8f9fa;border:1px solid #ddd}
+.dark-mode .quick-add-form{background:var(--bg-1);border:1px solid var(--br-1)}
+.quick-add-form input,.quick-add-form button{min-width:140px}
+.quick-label{white-space:nowrap;min-width:160px}
+
+/**************************************
+ * 6) SELECTI (Prikaži/Sortiraj)
+ **************************************/
+.form-select{background:#fff;color:#212529;border:1px solid #ced4da;transition:border-color .2s, box-shadow .2s}
+.form-select.form-select-sm{padding:.25rem 1.75rem .25rem .5rem;font-size:.875rem;line-height:1.25rem}
+.form-select:focus{border-color:var(--brand);box-shadow:0 0 0 .2rem rgba(13,110,253,.25);outline:0}
+.form-select:disabled{opacity:.7;cursor:not-allowed}
+#per_page.form-select,#sort.form-select{width:auto}
+.dark-mode .form-select{background:var(--bg-3);color:var(--txt-1);border:1px solid var(--br-2)}
+.dark-mode .form-select:focus{border-color:var(--brand);box-shadow:0 0 0 .2rem rgba(13,110,253,.35)}
+
+/**************************************
+ * 7) FORECAST KARTICE — LIGHT (DODATO)
+ * Ovo je nedostajalo, pa su borderi bili bledi.
+ **************************************/
+.forecast-card{
+    background:#fff;border:1px solid #dee2e6;border-radius:.5rem;box-shadow:none; /* stavi .shadow-sm ako želiš reljef */
+}
+.forecast-card .card-header{
+    background:#f8f9fa;color:#212529;border-bottom:1px solid #dee2e6;
+}
+.forecast-list li{color:#212529;border-bottom:1px dashed #e9ecef}
+.forecast-list li:last-child{border-bottom:none}
+.count-badge{
+    background:#f1f3f5;color:#495057;border:1px solid #dee2e6;border-radius:999px;padding:.1rem .45rem;font-size:.75rem
 }
 
 /**************************************
- * 5) KARTICE (npr. "Brzo dodavanje grada")
+ * 8) FORECAST KARTICE — DARK
  **************************************/
-.card.quick-add-card { /* opciono dodaj ovu klasu na karticu u Blade-u */
-    border-radius: 8px;
-}
-
-/* svetla tema */
-.card.quick-add-card { background-color: #f8f9fa; border: 1px solid #ddd; color: #212529; }
-.card.quick-add-card h5 { color: #212529; font-weight: 600; }
-.card.quick-add-card input { background-color: #fff; border: 1px solid #ced4da; color: #212529; }
-.card.quick-add-card input::placeholder { color: #6c757d; }
-
-/* tamna tema */
-.dark-mode .card.quick-add-card {
-    background-color: #1f1f1f;
-    border: 1px solid var(--br-1);
-    color: var(--txt-1);
-}
-.dark-mode .card.quick-add-card h5 { color: #f8f9fa; font-weight: 600; }
-.dark-mode .card.quick-add-card input {
-    background-color: var(--bg-3);
-    border: 1px solid var(--br-2);
-    color: var(--txt-1);
-}
-.dark-mode .card.quick-add-card input::placeholder { color: var(--txt-3); }
+.dark-mode .forecast-card{background:var(--bg-1);border:1px solid var(--br-1);box-shadow:none}
+.dark-mode .forecast-card .card-header{background:var(--bg-2);color:var(--txt-1);border-bottom:1px solid var(--br-1)}
+.dark-mode .forecast-list li{color:var(--txt-2);border-bottom:1px dashed var(--br-2)}
+.dark-mode .forecast-list li:last-child{border-bottom:none}
+.dark-mode .count-badge{background:#222;color:var(--txt-2);border:1px solid var(--br-2)}
 
 /**************************************
- * 6) QUICK-ADD FORMA (reda sa labelom + input + dugme "Dodaj")
+ * 9) TEMP BEDŽ (jedna bazna definicija + fallback)
  **************************************/
-.quick-add-form { background-color: #f8f9fa; border: 1px solid #ddd; }
-.dark-mode .quick-add-form { background-color: var(--bg-1); border: 1px solid var(--br-1); }
-
-.quick-add-form input,
-.quick-add-form button { min-width: 140px; }
-
-.quick-label { white-space: nowrap; min-width: 160px; }
-
-/**************************************
- * 7) SELECT (Prikaži / Sortiraj)
- * Target: Bootstrap .form-select i tvoji #per_page, #sort
- **************************************/
-
-/* zajednički stil za sve select-ove u adminu */
-.form-select {
-    /* light */
-    background-color: #fff;
-    color: #212529;
-    border: 1px solid #ced4da;
-    transition: border-color .2s, box-shadow .2s, background-color .2s, color .2s;
+/* bazno – koristi inline var(--temp-color) iz Blade-a */
+.temp-badge{
+    --temp-color:#888;
+    border-radius:999px;padding:.15rem .45rem;font-weight:600;font-size:.8rem;color:#fff;background:var(--temp-color);
 }
-
-/* kompaktna (sm) varijanta */
-.form-select.form-select-sm {
-    padding: 0.25rem 1.75rem 0.25rem 0.5rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-}
-
-/* fokus/hover (light) */
-.form-select:focus {
-    border-color: var(--brand);
-    box-shadow: 0 0 0 .2rem rgba(13,110,253,.25);
-    outline: 0;
-}
-
-/* disabled */
-.form-select:disabled { opacity: .7; cursor: not-allowed; }
-
-/* specifično za ta dva polja */
-#per_page.form-select,
-#sort.form-select {
-    width: auto; /* da ostane kompaktno uz labelu */
-}
-
-/* TAMNA TEMA: svi select-ovi */
-.dark-mode .form-select {
-    background-color: var(--bg-3);
-    color: var(--txt-1);
-    border: 1px solid var(--br-2);
-}
-
-/* TAMNA TEMA: fokus/hover */
-.dark-mode .form-select:focus {
-    border-color: var(--brand);
-    box-shadow: 0 0 0 .2rem rgba(13,110,253,.35);
-}
-
-/* TAMNA TEMA: baš Prikaži/Sortiraj */
-.dark-mode #per_page.form-select,
-.dark-mode #sort.form-select {
-    background-color: var(--bg-3);
-    color: var(--txt-1);
-    border-color: var(--br-2);
-}
-
-/**************************************
- * 8) SITNE KOREKCIJE (opciono)
- **************************************/
-/* poravnanje labela/select-a u redovima filter forme */
-.filters-row .form-label { margin-bottom: 0; font-weight: 600; }
-/* ako koristiš .w-auto iz Bootstrapa, ostavi ga – već ima !important */
-
-/* *************************************/
- /* === FORECAST KARTICE (samo DARK) === */
- /***************************************/
-.dark-mode .forecast-card{
-    background-color: var(--bg-1);
-    border: 1px solid var(--br-1);
-    box-shadow: none;
-}
-.dark-mode .forecast-card .card-header{
-    background-color: var(--bg-2);
-    color: var(--txt-1);
-    border-bottom: 1px solid var(--br-1);
-}
-.dark-mode .forecast-list li{
-    color: var(--txt-2);
-    border-bottom: 1px dashed var(--br-2);
-}
-.dark-mode .forecast-list li:last-child{ border-bottom: none; }
-
-/* bedževi: broj stavki (desno u headeru) i temperatura */
-.temp-badge {
-    border-radius: 999px;
-    padding: .15rem .45rem;
-    font-weight: 600;
-    font-size: .8rem;
-    color: #fff;
-    background: var(--temp-color); /* OVO koristi varijablu iz inline style */
-}
-/* Light mode temperature states */
-.temp-badge.temp-cold  { background: #cce5ff; color: #003366; }
-.temp-badge.temp-cool  { background: #99ccff; color: #002244; }
-.temp-badge.temp-warm  { background: #b3ffb3; color: #003300; }
-.temp-badge.temp-hot   { background: #ff9999; color: #660000; }
-
-.dark-mode .count-badge{
-    background: #222;
-    color: var(--txt-2);
-    border: 1px solid var(--br-2);
-    border-radius: 999px;
-    padding: .1rem .45rem;
-    font-size: .75rem;
-}
-.dark-mode .temp-badge {
-    border-radius: 999px;
-    padding: .15rem .45rem;
-    font-weight: 600;
-    font-size: .8rem;
-    color: #fff;
-    background: var(--temp-color); /* OVO koristi varijablu iz inline style */
-}
-
-/* Temperature states */
-.dark-mode .temp-badge.temp-cold  { background: lightblue; }
-.dark-mode .temp-badge.temp-cool  { background: blue; }
-.dark-mode .temp-badge.temp-warm  { background: green; }
-.dark-mode .temp-badge.temp-hot   { background: red; }
+/* fallback nijanse ako nema inline varijable */
+.temp-badge.temp-cold{background:#cce5ff;color:#003366}
+.temp-badge.temp-cool{background:#99ccff;color:#002244}
+.temp-badge.temp-warm{background:#b3ffb3;color:#003300}
+.temp-badge.temp-hot{background:#ff9999;color:#660000}
+.dark-mode .temp-badge.temp-cold{background:lightblue;color:#001a33}
+.dark-mode .temp-badge.temp-cool{background:blue;color:#fff}
+.dark-mode .temp-badge.temp-warm{background:green;color:#fff}
+.dark-mode .temp-badge.temp-hot{background:red;color:#fff}
