@@ -15,4 +15,15 @@ class ForecastModel extends Model
     {
         return $this->belongsTo(CitiesModel::class, 'city_id');
     }
+    public function getTempClassAttribute()
+    {
+        return match (true) {
+            $this->temperature <= 0 => 'temp-cold',
+            $this->temperature <= 15 => 'temp-cool',
+            $this->temperature <= 25 => 'temp-warm',
+            default => 'temp-hot',
+        };
+    }
+
+
 }

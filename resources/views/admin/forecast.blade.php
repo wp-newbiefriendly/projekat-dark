@@ -77,7 +77,9 @@
                                 @forelse ($city->forecasts ?? collect() as $forecast)
                                     <li class="d-flex justify-content-between">
                                         <span>{{ \Illuminate\Support\Carbon::parse($forecast->forecast_date)->toDateString() }}</span>
-                                        <span class="temp-badge">{{ $forecast->temperature }}°</span>
+                                        <span class="temp-badge {{ $forecast->temp_class }}">
+                                         {{ $forecast->temperature }}°
+                                        </span>
                                     </li>
                                 @empty
                                     <li class="text-muted">Nema prognoza.</li>

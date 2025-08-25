@@ -235,6 +235,19 @@
 .dark-mode .forecast-list li:last-child{ border-bottom: none; }
 
 /* bedževi: broj stavki (desno u headeru) i temperatura */
+.temp-badge {
+    border-radius: 999px;
+    padding: .15rem .45rem;
+    font-weight: 600;
+    font-size: .8rem;
+    color: #fff;
+}
+/* Light mode temperature states */
+.temp-badge.temp-cold  { background: #cce5ff; color: #003366; }
+.temp-badge.temp-cool  { background: #99ccff; color: #002244; }
+.temp-badge.temp-warm  { background: #b3ffb3; color: #003300; }
+.temp-badge.temp-hot   { background: #ff9999; color: #660000; }
+
 .dark-mode .count-badge{
     background: #222;
     color: var(--txt-2);
@@ -243,11 +256,16 @@
     padding: .1rem .45rem;
     font-size: .75rem;
 }
-.dark-mode .temp-badge{
-    background: var(--brand);
-    color: #fff;
+.dark-mode .temp-badge {
     border-radius: 999px;
     padding: .15rem .45rem;
     font-weight: 600;
     font-size: .8rem;
+    color: #fff;
 }
+
+/* Temperature states */
+.dark-mode .temp-badge.temp-cold  { background: lightblue; }
+.dark-mode .temp-badge.temp-cool  { background: blue; }
+.dark-mode .temp-badge.temp-warm  { background: green; }
+.dark-mode .temp-badge.temp-hot   { background: red; }
