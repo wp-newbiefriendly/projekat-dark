@@ -123,8 +123,14 @@
 .dark-mode .temp-badge.temp-hot{background:red;color:#fff}
 
 /* Vremenske ikone pored temperature */
-.wt-icon{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;line-height:1}
-.wt-icon svg{width:18px;height:18px}
+/* Tighter spacing ikonice i bedža */
+.temp-wrap { gap: 8px; }              /* bio je ~4px; sada 2px */
+.wt-icon { width: 16px; height: 16px; line-height: 1; }
+.wt-icon svg { width: 16px; height: 16px; }
+
+/* opcionalno još zbijeniji bedž ako želiš */
+.temp-badge { padding: .1rem .4rem; } /* bilo .15rem .45rem */
+
 
 /* boje po tipu */
 .wt-sunny{color:#f59f00}   /* žuta */
@@ -137,4 +143,5 @@
 .dark-mode .wt-rainy{color:#74c0fc}
 .dark-mode .wt-snowy{color:#a5d8ff}
 .dark-mode .wt-cloud{color:#adb5bd}
+
 

@@ -77,13 +77,15 @@
                                 @forelse ($city->forecasts ?? collect() as $forecast)
                                     <li class="d-flex justify-content-between">
                                         <span>{{ \Illuminate\Support\Carbon::parse($forecast->forecast_date)->toDateString() }}</span>
-                                           <span class="d-inline-flex align-items-center gap-1">
-                                              {!! \App\Http\ForecastHelper::getIconByType($forecast->weather_type) !!}
-                                            </span>
-                                        <span class="temp-badge" style="--temp-color: {{ \App\Http\ForecastHelper::getColorByTemperature($forecast->temperature) }}">
-                                        {{ $forecast->temperature }}°
-                                      </span>
+                                          <span class="temp-wrap d-inline-flex align-items-center">
+                                  {!! \App\Http\ForecastHelper::getIconByType($forecast->weather_type) !!}
+                                            <span class="temp-badge"
+                                                style="--temp-color: {{ \App\Http\ForecastHelper::getColorByTemperature($forecast->temperature) }}">
+                                                 {{ $forecast->temperature }}°
+                                             </span>
+                                        </span>
                                     </li>
+
                                 @empty
                                     <li class="text-muted">Nema prognoza.</li>
                                 @endforelse
