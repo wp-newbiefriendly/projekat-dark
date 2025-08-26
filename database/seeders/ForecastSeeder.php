@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ForecastModel;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class ForecastSeeder extends Seeder
 
             // 4. Unutar svakog grada dodajemo 5 prognoza (za 5 različitih dana)
             for ($i = 0; $i < 5; $i++) {
-                $type = collect(['sunny', 'rainy', 'snowy'])->random();
+                $weatherType = ForecastModel::WEATHERS[rand(0,3)];
                 DB::table('forecasts')->insert([
                     // spajamo forecast sa gradom preko foreign key-a
                     'city_id' => $city->id,
@@ -34,8 +35,8 @@ class ForecastSeeder extends Seeder
                     'forecast_date' => Carbon::create(2025, 8, 22)->addDays($i)->format('Y-m-d'),
 
                     // Stanje vremena i verovatnoca padavina - random
-                    'weather_type' => $type,
-                    'probability' => in_array($type, ['rainy', 'snowy']) ? rand(1, 100) : null,
+                    'weather_type' => $weatherType,
+                    'probability' => in_array($weatherType, ['rainy', 'snowy']) ? rand(1, 100) : null,
 
                     // timestampi
                     'created_at' => now(),
