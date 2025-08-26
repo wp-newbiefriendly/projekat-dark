@@ -121,3 +121,20 @@
 .dark-mode .temp-badge.temp-cool{background:blue;color:#fff}
 .dark-mode .temp-badge.temp-warm{background:green;color:#fff}
 .dark-mode .temp-badge.temp-hot{background:red;color:#fff}
+
+/* Vremenske ikone pored temperature */
+.wt-icon{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;line-height:1}
+.wt-icon svg{width:18px;height:18px}
+
+/* boje po tipu */
+.wt-sunny{color:#f59f00}   /* žuta */
+.wt-rainy{color:#0d6efd}   /* plava */
+.wt-snowy{color:#74c0fc}   /* svetlo-plava */
+.wt-cloud{color:#6c757d}   /* siva */
+
+/* mračni mod može biti malo jači kontrast */
+.dark-mode .wt-sunny{color:#ffd43b}
+.dark-mode .wt-rainy{color:#74c0fc}
+.dark-mode .wt-snowy{color:#a5d8ff}
+.dark-mode .wt-cloud{color:#adb5bd}
+
