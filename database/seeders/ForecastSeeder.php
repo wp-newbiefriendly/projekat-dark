@@ -18,7 +18,7 @@ class ForecastSeeder extends Seeder
 
             // 5 prognoza po gradu
             for ($i = 0; $i < 30; $i++) {
-                $weatherType = ForecastsModel::WEATHERS[rand(0, 3)];
+                $weatherType = ForecastModel::WEATHERS[rand(0, 3)];
                 $probability = in_array($weatherType, ['rainy','snowy']) ? rand(1,100) : null;
 
 // 1) Opseg po tipu
@@ -50,11 +50,9 @@ class ForecastSeeder extends Seeder
                             $temperature = max($max, $lastTemperature - 5);
                         }
                     }
+                    $temperature    = max(-50, min(55, $temperature));
+                    $lastTemperature = $temperature;
                 }
-
-// (opciono) fizička granica
-                $temperature    = max(-50, min(55, $temperature));
-                $lastTemperature = $temperature;
 
 
 
