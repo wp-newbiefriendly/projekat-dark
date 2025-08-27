@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class CitiesModel extends Model
 {
@@ -21,6 +22,11 @@ class CitiesModel extends Model
     {
         return $this->hasMany(ForecastModel::class, 'city_id')
             ->orderBy('forecast_date'); // datumi sortirani unutar grada
+    }
+    public function todaysForecast()
+    {
+        return $this->hasOne(ForecastModel::class, 'city_id')
+            ->whereDate('forecast_date', Carbon::now());
     }
 
 }

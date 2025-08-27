@@ -6,7 +6,11 @@
 
     <div class="d-flex flex-wrap gap-3 justify-content-center">
         @foreach($cities as $city)
-            <span class="btn btn-primary rounded-pill px-3 py-2">{{ $city->name }}</span>
+            @php
+                $fc = $city->todaysForecast;
+                $icon = $fc ? \App\Http\ForecastHelper::getWeatherData($fc->weather_type, $fc->temperature)['icon'] : '';
+            @endphp
+            <span class="btn btn-primary rounded-pill px-3 py-2"><i class="{{ $icon }}"></i> {{ $city->name }}</span>
         @endforeach
     </div>
 
