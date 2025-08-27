@@ -26,43 +26,48 @@ class ForecastSeeder extends Seeder
                     ? rand(20, 100)
                     : null;
 
-                // ➊ Granice po tipu
-                // 1) Opseg po tipu
+                // 1) Opseg po tipu vremena
                 switch ($weatherType) {
                     case 'sunny':  [$min, $max] = [-20, 45]; break;
                     case 'cloudy': [$min, $max] = [-20, 15]; break;
                     case 'rainy':  [$min, $max] = [-30, 10]; break;
-                    case 'snowy':  [$min, $max] = [-20, 1];  break; // ❄️ uvek -20..+1
+                    case 'snowy':  [$min, $max] = [-20, 1];  break;
                 }
 
-// 2) Predlog temperature
+// 2) RACUN TEMPERATURE SA PRAVILIMA:
+//    - prvi dan: slobodan start (npr. -5..45 da izgleda realno)
+//    - ostali dani: maksimalna promena ±5 u odnosu na juče
+//    - ako je jučerašnja temp van opsega za novi tip: pomeraj se KA opsegu korakom do 5
+//    - čim uđeš u opseg: dozvoli “drhtanje” ±5, ali i dalje unutar opsega
+
                 if ($prevTemp === null) {
-                    // Prvi dan: uvek u okviru izabranog tipa → nema više snowy 14°C
-                    $proposed = rand($min, $max);
+                    // DAN 1: može šta god (po želji suzi raspon)
+                    $temperature = rand(-5, 45);
                 } else {
-                    // Ako je isti tip vremena → “drhti” oko prethodne ±5
-                    // Ako se tip promenio → i dalje koristi mali korak (postepeno)
-                    $korak   = ($weatherType === ($prevWeatherType ?? null)) ? rand(-5, 5) : rand(-5, 5);
-                    $proposed = $prevTemp + $korak;
+                    // dozvoljeni dnevni korak
+                    $step = rand(1, 5);
+
+                    if ($prevTemp < $min) {
+                        // juče ispod opsega → diži se ka donjoj granici, ali max +5
+                        $temperature = $prevTemp + $step;              // NEMA clamp-a na $min da ne “teleportuje”
+                        // (sledećih dana će nastaviti da se penje dok ne uđe u [min,max])
+                    } elseif ($prevTemp > $max) {
+                        // juče iznad opsega → spuštaj se ka gornjoj granici, ali max -5
+                        $temperature = $prevTemp - $step;              // NEMA clamp-a na $max da ne “teleportuje”
+                    } else {
+                        // juče je bilo u opsegu → drhtanje ±5, ali ostani u granicama tipa
+                        $proposed    = $prevTemp + rand(-5, 5);
+                        $temperature = max($min, min($max, $proposed)); // clamp unutar [min,max]
+                    }
                 }
 
-// 3) OBAVEZNI CLAMP — garantuje invarijantu opsega po tipu
-                $temperature = max($min, min($max, $proposed));
+// (opciono) hard fizička granica da ne ode previše suludo
+                $temperature = max(-50, min(55, $temperature));
 
-// 4) (opciono) fizički “hard” limit da ništa ne pobegne suludo
-                $temperature = max(-40, min(50, $temperature));
-
-// 5) zapamti za sledeći dan
+// zapamti za sledeći dan
                 $prevTemp        = $temperature;
                 $prevWeatherType = $weatherType;
 
-
-                // (opciono) ukupna fizička granica da ne pobegne previše mimo realnog sveta
-                $temperature = max(-40, min(50, $temperature));
-
-                  // set za sledeću iteraciju
-                $prevTemp        = $temperature;
-                $prevWeatherType = $weatherType;
 
 
                 ForecastModel::create([
