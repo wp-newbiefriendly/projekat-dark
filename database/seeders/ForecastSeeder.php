@@ -34,16 +34,24 @@ class ForecastSeeder extends Seeder
                 }
 
                 if ($prevTemp === null) {
-                    // prvi unos → random u granicama za tip vremena
+                    // prvi unos → slobodno u okviru tipa
                     $temperature = rand($min, $max);
                 } else {
-                    // svaki sledeći unos → oslanja se na prethodnu temp.
-                    $low  = max($min, $prevTemp - 5);
-                    $high = min($max, $prevTemp + 5);
+                    // prozor oko prethodne
+                    $winLow  = $prevTemp - 5;
+                    $winHigh = $prevTemp + 5;
 
-                    $temperature = ($low > $high) ? $low : rand($low, $high);
+                    // preseci sa [min,max] za tip vremena
+                    $low  = max($min, $winLow);
+                    $high = min($max, $winHigh);
+
+                    if ($low > $high) {
+                        // nema overlap-a → uzmi najbližu granicu
+                        $temperature = ($prevTemp < $min) ? $min : $max;
+                    } else {
+                        $temperature = rand($low, $high);
+                    }
                 }
-
 
                 ForecastModel::create([
                     'city_id'       => $city->id,
