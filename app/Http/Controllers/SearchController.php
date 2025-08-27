@@ -19,7 +19,7 @@ class SearchController extends Controller
 
         // 2) Pretraga "sadrži" (case-insensitive i bezbedno)
         $needle = mb_strtolower($q);
-        $cities = CitiesModel::whereRaw('LOWER(name) LIKE ?', ["%{$needle}%"])
+        $cities = CitiesModel::with('todaysForecast')->whereRaw('LOWER(name) LIKE ?', ["%{$needle}%"])
             ->orderBy('name')
             ->get();                                                // ili paginate(100)->withQueryString()
 
