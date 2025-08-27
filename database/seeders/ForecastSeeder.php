@@ -20,7 +20,7 @@ class ForecastSeeder extends Seeder
             $prevTemp = null;
 
             // 5 prognoza po gradu
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < 30; $i++) {
                 $weatherType = ForecastModel::WEATHERS[rand(0,3)];
                 $probability = in_array($weatherType, ['rainy', 'snowy'])
                     ? rand(20, 100)
