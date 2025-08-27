@@ -27,36 +27,37 @@ class ForecastSeeder extends Seeder
                     : null;
 
                 // ➊ Granice po tipu
+                // 1) Opseg po tipu
                 switch ($weatherType) {
                     case 'sunny':  [$min, $max] = [-20, 45]; break;
                     case 'cloudy': [$min, $max] = [-20, 15]; break;
                     case 'rainy':  [$min, $max] = [-30, 10]; break;
-                    case 'snowy':  [$min, $max] = [-20, 1];  break;
+                    case 'snowy':  [$min, $max] = [-20, 1];  break; // ❄️ uvek -20..+1
                 }
 
-               // ➋ Prvi dan: može "šta god" (umeren raspon da izgleda realnije)
+// 2) Predlog temperature
                 if ($prevTemp === null) {
-                    $temperature = rand(-5, 25);
+                    // Prvi dan: uvek u okviru izabranog tipa → nema više snowy 14°C
+                    $proposed = rand($min, $max);
                 } else {
-                    // Koliko sme da se promeni u jednom danu (korak)
-                    $step = rand(1, 5);
-
-                    if (!isset($prevWeatherType) || $weatherType === $prevWeatherType) {
-                        // ➌ Isti tip vremena → prati prethodnu (±5), ali drži u granicama tipa
-                        $proposed    = $prevTemp + rand(-5, 5);
-                        $temperature = max($min, min($max, $proposed));
-                    } else {
-                        // ➍ Promena tipa vremena → POSTEPENO približavanje novom opsegu (bez naglog skoka)
-                        if     ($prevTemp > $max) $temperature = $prevTemp - $step;  // spuštaj ka gornjoj granici novog tipa
-                        elseif ($prevTemp < $min) $temperature = $prevTemp + $step;  // diži ka donjoj granici novog tipa
-                        else                      $temperature = $prevTemp + rand(-3, 3); // već si u opsegu → blago variraj
-
-                        // (namerno NE klampujemo ovde da ne "iscvokne" odmah na granicu;
-                        // sledećih dana će se po koracima približavati novom opsegu)
-                    }
+                    // Ako je isti tip vremena → “drhti” oko prethodne ±5
+                    // Ako se tip promenio → i dalje koristi mali korak (postepeno)
+                    $korak   = ($weatherType === ($prevWeatherType ?? null)) ? rand(-5, 5) : rand(-5, 5);
+                    $proposed = $prevTemp + $korak;
                 }
 
-                  // (opciono) ukupna fizička granica da ne pobegne previše mimo realnog sveta
+// 3) OBAVEZNI CLAMP — garantuje invarijantu opsega po tipu
+                $temperature = max($min, min($max, $proposed));
+
+// 4) (opciono) fizički “hard” limit da ništa ne pobegne suludo
+                $temperature = max(-40, min(50, $temperature));
+
+// 5) zapamti za sledeći dan
+                $prevTemp        = $temperature;
+                $prevWeatherType = $weatherType;
+
+
+                // (opciono) ukupna fizička granica da ne pobegne previše mimo realnog sveta
                 $temperature = max(-40, min(50, $temperature));
 
                   // set za sledeću iteraciju
