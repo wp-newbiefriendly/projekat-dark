@@ -30,28 +30,29 @@ class ForecastSeeder extends Seeder
                     case 'sunny':  [$min, $max] = [-20, 45]; break;
                     case 'cloudy': [$min, $max] = [-20, 15]; break;
                     case 'rainy':  [$min, $max] = [-30, 10]; break;
-                    case 'snowy':  [$min, $max] = [-20, 1];  break;
+                    case 'snowy':  [$min, $max] = [-20, 1];  break;  // ❄️ sneg UVEK -20..+1
                 }
 
                 if ($prevTemp === null) {
-                    // prvi unos → slobodno u okviru tipa
-                    $temperature = rand($min, $max);
+                    // 1) Prvi dan – dozvoli šta god da izađe (slobodan start)
+                    $temperature = rand(-5, 25);
                 } else {
-                    // prozor oko prethodne
-                    $winLow  = $prevTemp - 5;
-                    $winHigh = $prevTemp + 5;
+                    // 2) Definiši koliki korak dnevno dozvoljavaš
+                    $step = rand(1, 5);
 
-                    // preseci sa [min,max] za tip vremena
-                    $low  = max($min, $winLow);
-                    $high = min($max, $winHigh);
-
-                    if ($low > $high) {
-                        // nema overlap-a → uzmi najbližu granicu
-                        $temperature = ($prevTemp < $min) ? $min : $max;
+                    if ($prevTemp < $min) {
+                        // 2a) Ako je prethodna ispod tipa → približi se donjoj granici
+                        $temperature = min($min, $prevTemp + $step);
+                    } elseif ($prevTemp > $max) {
+                        // 2b) Ako je prethodna iznad tipa → približi se gornjoj granici
+                        $temperature = max($max, $prevTemp - $step);
                     } else {
-                        $temperature = rand($low, $high);
+                        // 2c) Ako je u okviru tipa → pomeri se ±5 ali uvek drži unutar tipa
+                        $proposed    = $prevTemp + rand(-5, 5);
+                        $temperature = max($min, min($max, $proposed));
                     }
                 }
+
 
                 ForecastModel::create([
                     'city_id'       => $city->id,
