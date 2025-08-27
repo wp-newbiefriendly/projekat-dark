@@ -16,12 +16,15 @@ class ForecastSeeder extends Seeder
 
         foreach ($cities as $index => $city) {
 
-            // 5 prognoza po gradu
+            $lastTemperature = null; // reset za svaki grad
+
             for ($i = 0; $i < 30; $i++) {
+
+                // 1) Izbor tipa i verovatnoće
                 $weatherType = ForecastModel::WEATHERS[rand(0, 3)];
                 $probability = in_array($weatherType, ['rainy','snowy']) ? rand(1,100) : null;
 
-// 1) Opseg po tipu
+                // 2) Opseg po tipu
                 switch ($weatherType) {
                     case 'sunny':  [$min,$max] = [-20, 45]; break;
                     case 'cloudy': [$min,$max] = [-20, 15]; break;
@@ -29,33 +32,30 @@ class ForecastSeeder extends Seeder
                     case 'snowy':  [$min,$max] = [-20, 1];  break;
                 }
 
+                // 3) Temperatura: start iz opsega; dalje presek ili klizanje ±5
                 if ($lastTemperature === null) {
-                    // 2) Start u opsegu tipa
                     $temperature = rand($min, $max);
                 } else {
-                    // 3) Prozor ±5 oko juče i presek sa opsegom tipa
                     $low  = max($min, $lastTemperature - 5);
                     $high = min($max, $lastTemperature + 5);
 
                     if ($low <= $high) {
-                        // imamo presek → drhtanje unutar preseka
+                        // u opsegu i kontinuitet postoji
                         $temperature = rand($low, $high);
                     } else {
-                        // nema preseka → KLIZI ka opsegu max 5°
+                        // nema preseka → klizi ka opsegu max 5°
                         if ($lastTemperature < $min) {
-                            // ispod opsega → podigni, ali najviše do donje granice
                             $temperature = min($min, $lastTemperature + 5);
-                        } else {
-                            // iznad opsega → spusti, ali najviše do gornje granice
+                        } else { // $lastTemperature > $max
                             $temperature = max($max, $lastTemperature - 5);
                         }
                     }
-                    $temperature    = max(-50, min(55, $temperature));
-                    $lastTemperature = $temperature;
                 }
 
+                // (opciono) fizička granica
+                $temperature = max(-50, min(55, $temperature));
 
-
+                // 4) Upis
                 ForecastModel::create([
                     'city_id'       => $city->id,
                     'temperature'   => $temperature,
@@ -64,14 +64,15 @@ class ForecastSeeder extends Seeder
                     'probability'   => $probability,
                 ]);
 
-                $prevTemp = $temperature;
+                // 5) za sledeći dan
+                $lastTemperature = $temperature;
             }
 
-            // progress bar
+            // progress bar (kozmetika)
             $progress = intval((($index + 1) / max(1, $count)) * 50);
-            $bar      = str_repeat("█", $progress) . str_repeat(" ", 50 - $progress);
+            $bar      = str_repeat('█', $progress) . str_repeat(' ', 50 - $progress);
             $percent  = round((($index + 1) / max(1, $count)) * 100);
-            echo "\r[" . $bar . "] $percent% | " . $city->name . " (" . ($index + 1) . "/$count)";
+            echo "\r[".$bar."] $percent% | ".$city->name." (".($index + 1)."/$count)";
         }
 
         echo "\n✅ Ubacene prognoze za $count gradova.\n";
