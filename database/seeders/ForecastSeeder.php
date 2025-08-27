@@ -30,28 +30,28 @@ class ForecastSeeder extends Seeder
                     case 'sunny':  [$min, $max] = [-20, 45]; break;
                     case 'cloudy': [$min, $max] = [-20, 15]; break;
                     case 'rainy':  [$min, $max] = [-30, 10]; break;
-                    case 'snowy':  [$min, $max] = [-20, 1];  break;  // ❄️ sneg UVEK -20..+1
+                    case 'snowy':  [$min, $max] = [-20, 1];  break; // sneg uvek -20..+1
                 }
 
                 if ($prevTemp === null) {
-                    // 1) Prvi dan – dozvoli šta god da izađe (slobodan start)
-                    $temperature = rand(-5, 25);
+                    // PRVI DAN: uvek u opsegu tipa (nema više snowy 14°C)
+                    $temperature = rand($min, $max);
                 } else {
-                    // 2) Definiši koliki korak dnevno dozvoljavaš
                     $step = rand(1, 5);
 
                     if ($prevTemp < $min) {
-                        // 2a) Ako je prethodna ispod tipa → približi se donjoj granici
-                        $temperature = min($min, $prevTemp + $step);
+                        // podigni ka min, ali ne ispod min
+                        $temperature = max($min, $prevTemp + $step);
                     } elseif ($prevTemp > $max) {
-                        // 2b) Ako je prethodna iznad tipa → približi se gornjoj granici
-                        $temperature = max($max, $prevTemp - $step);
+                        // spusti ka max, ali ne iznad max
+                        $temperature = min($max, $prevTemp - $step);
                     } else {
-                        // 2c) Ako je u okviru tipa → pomeri se ±5 ali uvek drži unutar tipa
+                        // već smo u opsegu: malo “drhti” ±5, ali uvek unutar tipa
                         $proposed    = $prevTemp + rand(-5, 5);
                         $temperature = max($min, min($max, $proposed));
                     }
                 }
+
 
 
                 ForecastModel::create([
