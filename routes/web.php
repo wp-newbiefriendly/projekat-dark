@@ -4,11 +4,16 @@ use App\Http\Controllers\ForecastCityController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SearchController;
+
 
 // Stranice za Usere
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+Route::get('/search', [SearchController::class, 'search'])->name('search.city');
+
 
 // Auth Stranice:
 // Prognoza

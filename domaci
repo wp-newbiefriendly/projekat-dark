@@ -1,1 +1,92 @@
-EDITCITIES URADI
+# 15 lekcija "15.20/21"
+DOMAĆI:
+- Dodati još 1 tip vremena "cloudy"
+    - Dodati u seeder
+    - Dodati ikonicu
+    - Da li još negde treba?
+
+- Unutar Forecast seeder prepraviti logiku:
+    - Ako je weather_type:
+        * Sunny -> temperatura će biti bilo koja
+        * Cloudy -> do 15 stepeni
+        * Rainy -> bilo koja temperatura do -10
+        * Snowy -> temperatura će biti 1 ili manje od 1 stepena
+
+BONUS:
+- Temperature ne smeju da variraju više od 5 stepeni gore/dole
+    * Ako je prva temperatura bila (PRIMER) 15 stepeni za određeni Beograd,
+      sledeća ne sme biti veća od 20
+
+Beograd -> rand(-30, 100) -> 17 -> 22 -> 18
+
+
+stari forecastseeder
+
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\ForecastModel;
+use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use function Symfony\Component\String\b;
+
+class ForecastSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $cities = DB::table('cities')->get();
+        $count = $cities->count();
+        foreach ($cities as $index => $city) {
+
+            for ($i = 0; $i < 5; $i++) {
+                $weatherType = ForecastModel::WEATHERS[rand(0,3)];
+                $probability = null;
+
+                if ($weatherType === 'rainy' || $weatherType === 'snowy')
+                {
+                    $probability = rand(20, 100);
+                }
+                // Logika za -5 ili +5 temperaturu po novom dodavanju
+                $prevTemp = null;
+
+                switch ($weatherType) {
+                    case 'sunny':  [$min, $max] = [-20, 45]; break;
+                    case 'cloudy': [$min, $max] = [-20, 15]; break;
+                    case 'rainy':  [$min, $max] = [-30, -10]; break;
+                    case 'snowy':  [$min, $max] = [-20, 1]; break;
+                }
+
+                $temperature = $prevTemp === null
+                    ? rand($min, $max)                           // prvi put
+                    : rand(max($min, $prevTemp - 5), min($max, $prevTemp + 5));
+
+            }
+
+
+                ForecastModel::create([
+                    'city_id' => $city->id,
+                    'temperature' => $temperature,
+                    'forecast_date' => Carbon::now()->addDays($i)->format('Y-m-d'),
+                    'weather_type' => $weatherType,
+                    'probability' => $probability,
+                ]);
+
+                $prevTemp = $temperature;
+
+            }
+
+            // 5. Računamo progress za svaki grad
+            $progress = intval((($index + 1) / $count) * 50); // širina bara = 50 znakova
+            $bar = str_repeat("█", $progress) . str_repeat(" ", 50 - $progress); // puni i prazni delovi
+            $percent = round((($index + 1) / $count) * 100); // procenat završenog posla
+
+            // 6. Prikazujemo progress bar u jednom redu, zajedno sa imenom grada
+            echo "\r[" . $bar . "] $percent% | " . $city->name . " ($index/$count)";
+        }
+
+        // 7. Kada se sve završi, ispiše završnu poruku
+        echo "\n✅ Ubacene prognoze za $count gradova.\n";
+    }
+}
