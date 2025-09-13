@@ -15,7 +15,7 @@ class ForecastCityController extends Controller
         $sort = request('sort', 'asc'); // default stari -> novi
         $perPage = request('per_page', 12); // default 12
         $totalCities = CitiesModel::all();
-        $allCities = CitiesModel::with('forecasts')
+        $allCities = CitiesModel::with('forecasts') // optimizovano with()
             ->orderBy('id', $sort) // OVO dodaje sortiranje
             ->paginate($perPage);
         return view('admin.forecast', compact('city','allCities', 'sort', 'totalCities'));;

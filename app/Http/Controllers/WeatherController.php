@@ -44,7 +44,7 @@ class WeatherController extends Controller
 
     public function allShowWeather()
     {
-        $prognoza = WeatherModel::all();
+        $prognoza = WeatherModel::with('city'); // optimizovano u modelu "city"
         return view('weather', compact('prognoza'));
     }
 
