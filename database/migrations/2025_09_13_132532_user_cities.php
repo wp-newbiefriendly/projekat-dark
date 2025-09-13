@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_cities'), function (Blueprint $table) {
-            $table-> id();
+        Schema::create('user_cities', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
-    }
+        });
     }
 
     /**
