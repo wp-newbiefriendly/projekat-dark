@@ -4,13 +4,20 @@
 <div class="container py-5">
     <h3 class="text-center mb-4">Rezultati  ({{ $cities->count() }})</h3>
 
-    <div class="d-flex flex-wrap gap-3 justify-content-center">
+    <div class="city-grid">
         @foreach($cities as $city)
             @php
                 $fc = $city->todaysForecast;
                 $icon = $fc ? \App\Http\ForecastHelper::getWeatherData($fc->weather_type, $fc->temperature)['icon'] : '';
             @endphp
-            <span class="btn btn-primary rounded-pill px-3 py-2"><i class="{{ $icon }}"></i> {{ $city->name }}</span>
+            <div class="d-flex align-items-center gap-2">
+                <button class="fav-btn">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+                <span class="btn btn-primary rounded-pill px-3 py-2">
+                <i class="{{ $icon }}"></i> {{ $city->name }}
+            </span>
+            </div>
         @endforeach
     </div>
 

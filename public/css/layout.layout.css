@@ -1,0 +1,20 @@
+.fav-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #0d6efd;   /* ista plava kao btn-primary */
+    border-radius: 50%;
+    background: transparent;
+    color: #0d6efd;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.fav-btn:hover {
+    background: #0d6efd;
+    color: #fff;
+}
+.fav-btn i { font-size: 14px; }
+.city-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px 20px; /* razmak red/kolona */
+}
