@@ -5,6 +5,7 @@ use App\Http\Controllers\WeatherController;
 use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\UserCitiesController;
 
 
 // Stranice za Usere
@@ -19,6 +20,11 @@ Route::get('/search', [SearchController::class, 'search'])->name('search.city');
 // Prognoza
 Route::get('/prognoza', [App\Http\Controllers\WeatherController::class, 'allShowWeather'])
     ->name('weather') ->middleware('auth');
+
+// User Cities
+Route::get("/user-cities/favorite/{city_id}",[UserCitiesController::class, 'favorite'])
+->name('city_favorite');
+
 
 // Stranice za Admine
 Route::middleware(['auth', AdminCheckMiddleware::class])

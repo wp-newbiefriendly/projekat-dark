@@ -11,7 +11,7 @@
                 $icon = $fc ? \App\Http\ForecastHelper::getWeatherData($fc->weather_type, $fc->temperature)['icon'] : '';
             @endphp
             <div class="d-flex align-items-center gap-2">
-                <button class="fav-btn">
+                <button class="fav-btn" href="{{ route('city_favorite', ['city' => $city->id]) }}">
                     <i class="fa-regular fa-heart"></i>
                 </button>
                 <span class="btn btn-primary rounded-pill px-3 py-2">
