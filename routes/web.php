@@ -15,7 +15,6 @@ Route::get('/', function () {
 
 Route::get('/search', [SearchController::class, 'search'])->name('search.city');
 
-
 // Auth Stranice:
 // Prognoza
 Route::get('/prognoza', [App\Http\Controllers\WeatherController::class, 'allShowWeather'])

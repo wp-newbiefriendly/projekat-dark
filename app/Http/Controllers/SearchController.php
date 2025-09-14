@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CitiesModel;
 use App\Models\UserCitiesModel;
+use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
 {
@@ -34,6 +35,12 @@ class SearchController extends Controller
         $favoriteCityIds = auth()->check()
             ? UserCitiesModel::where('user_id', auth()->id())->pluck('city_id')->toArray()
             : [];
+
+        // $userFavorites = auth()->user()->cityFavorites()->pluck('city_id')->toArray();
+        $userFavorites = Auth::user()->cityFavorites;
+        $userFavorites = $userFavorites->pluck('city_id')->toArray();
+
+        dd($userFavorites);
 
         return view('search_results', compact('cities', 'q', 'favoriteCityIds'));
     }
