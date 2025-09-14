@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CitiesModel;
+use App\Models\UserCitiesModel;
 
 class SearchController extends Controller
 {
@@ -19,9 +20,10 @@ class SearchController extends Controller
 
         // 2) Pretraga "sadrži" (case-insensitive i bezbedno)
         $needle = mb_strtolower($q);
-        $cities = CitiesModel::with('todaysForecast')->whereRaw('LOWER(name) LIKE ?', ["%{$needle}%"])
+        $cities = CitiesModel::with('todaysForecast')
+            ->whereRaw('LOWER(name) LIKE ?', ["%{$needle}%"])
             ->orderBy('name')
-            ->get();                                                // ili paginate(100)->withQueryString()
+            ->get(); // ili paginate()->withQueryString()                                            // ili paginate(100)->withQueryString()
 
         // 3) Ako nema rezultata → nazad na početnu sa porukom
         if ($cities->isEmpty()) {
@@ -29,7 +31,11 @@ class SearchController extends Controller
                 ->with('error', 'Grad nije pronađen. Pokušajte drugi unos.');
         }
 
-        return view('search_results', ['cities' => $cities, 'q' => $q]);
+        $favoriteCityIds = auth()->check()
+            ? UserCitiesModel::where('user_id', auth()->id())->pluck('city_id')->toArray()
+            : [];
+
+        return view('search_results', compact('cities', 'q', 'favoriteCityIds'));
     }
 
 }

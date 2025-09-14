@@ -24,9 +24,15 @@
                 $fc = $city->todaysForecast;
                 $icon = $fc ? \App\Http\ForecastHelper::getWeatherData($fc->weather_type, $fc->temperature)['icon'] : '';
             @endphp
+
+            @php $isFav = in_array($city->id, $favoriteCityIds); @endphp
+
             <div class="d-flex align-items-center gap-2">
-                <a class="fav-btn" href="{{ route('city_favorite', ['city_id' => $city->id]) }}">
-                    <i class="fa-regular fa-heart"></i>
+                <a class="fav-btn {{ $isFav ? 'is-fav' : '' }}"
+                   href="{{ route('city_favorite', ['city_id' => $city->id]) }}"
+                   aria-pressed="{{ $isFav ? 'true' : 'false' }}"
+                   title="{{ $isFav ? 'Ukloni iz favorita' : 'Dodaj u favorite' }}">
+                    <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
                 </a>
                 <span class="btn btn-primary rounded-pill px-3 py-2">
                 <i class="{{ $icon }}"></i> {{ $city->name }}

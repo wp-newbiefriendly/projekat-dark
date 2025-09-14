@@ -16,6 +16,14 @@
 }
 .fav-btn i { font-size: 14px; }
 
+.fav-btn.is-fav,
+.fav-btn.is-fav:hover {
+    background: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+}
+
+
 .city-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -37,4 +45,5 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     text-align: center;
 }
+
 
