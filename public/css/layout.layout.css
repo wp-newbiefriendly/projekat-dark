@@ -21,14 +21,13 @@
     grid-template-columns: repeat(6, 1fr);
     gap: 14px 20px; /* razmak red/kolona */
 }
-.alert-message {
+.alert-top {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1050;
-    width: auto;
-    max-width: 400px;
+    border-radius: 0; /* da izgleda kao traka */
     text-align: center;
 }
 .alert {

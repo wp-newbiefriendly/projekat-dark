@@ -3,8 +3,9 @@
 @section('sadrzajstranice') {{-- ili 'content' --}}
 
 @if(session('error'))
-    <div class="alert alert-danger alert-fixed">
-        {{ session('error') }}
+    <div class="alert alert-danger alert-top d-flex justify-content-center align-items-center">
+        <span class="me-3">{{ session('error') }}</span>
+        <a href="{{ route('login') }}" class="btn btn-sm btn-light">Login</a>
     </div>
 @endif
 
