@@ -22,7 +22,7 @@ Route::get('/prognoza', [App\Http\Controllers\WeatherController::class, 'allShow
     ->name('weather') ->middleware('auth');
 
 // User Cities
-Route::get("/user-cities/favorite/{city_id}",[UserCitiesController::class, 'favorite'])
+Route::get('/user-cities/favorite/{city_id}', [UserCitiesController::class, 'favorite'])
 ->name('city_favorite');
 
 
