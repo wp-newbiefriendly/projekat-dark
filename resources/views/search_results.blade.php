@@ -1,6 +1,19 @@
 @extends('layouts.layout')
 
 @section('sadrzajstranice') {{-- ili 'content' --}}
+
+@if(session('error'))
+    <div class="alert alert-danger alert-fixed">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 <div class="container py-5">
     <h3 class="text-center mb-4">Rezultati  ({{ $cities->count() }})</h3>
 
