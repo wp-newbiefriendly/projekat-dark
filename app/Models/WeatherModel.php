@@ -9,6 +9,8 @@ class WeatherModel extends Model
 {
     use SoftDeletes;
 
+    const TABLE_NAME = 'weather';
+
     protected $table = "weather";
 
     protected $fillable =

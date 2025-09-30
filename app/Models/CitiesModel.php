@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class CitiesModel extends Model
+
+
 {
+    const TABLE_NAME = 'cities';
+
     protected $table = 'cities';
 
     protected $fillable = ['name'];

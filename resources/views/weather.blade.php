@@ -10,7 +10,7 @@
 
         <div class="container mt-5">
             <ul class="list-group list-group-horizontal justify-content-center flex-wrap">
-                // uzimamo 100 prognoza iz (WeatherModel::all();) * optimizovano sa with()
+{{--                // uzimamo 100 prognoza iz (WeatherModel::all();) * optimizovano sa with()--}}
                 @foreach($prognoza->take(100) as $weather)
                     <li class="list-group-item d-flex align-items-center">
                         <i class="fas fa-sun text-warning me-2"></i>
