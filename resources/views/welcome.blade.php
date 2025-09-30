@@ -27,10 +27,36 @@
             </button>
         </div>
     </form>
+        @auth
+            @if($favoriteCities->isNotEmpty())
+        <div class="text-center mb-1 mt-5">
+            <h1 class="display-6 fw-bold mb-1">
+                <i class="fa-regular fa-heart text-danger fa-xs"></i> Favorites</h1>
 
-        <div class="city-favorites">
-
-        </div>
-</div>
+            <div class="container mt-2 shadow-lg">
+                <ul class="list-group list-group-horizontal justify-content-center flex-wrap p-4">
+                    @foreach($favoriteCities as $userFav)
+                        @php
+                            $fc = $userFav->todaysForecast;
+                            $icon = $fc ? \App\Http\ForecastHelper::getWeatherData($fc->weather_type, $fc->temperature)['icon'] : '';
+                        @endphp
+                        <li class="list-group-item m-2">
+                            <div class="city-info">
+                                <h5>{{ $userFav->name }}</h5>
+                                <h2><i class="{{ $icon }}"></i> {{ $userFav->todaysForecast->temperature }}°C</h2>
+                                <p><small><i class="fa-solid fa-droplet"></i> {{ $userFav->todaysForecast->probability ?? 0 }}%</small></p>
+                                <p>{{ $userFav->todaysForecast->forecast_date }}</p>
+                                <a href="{{ route('city_favorite', $userFav->id) }}" class="text-decoration-none" title="Ukloni iz omiljenih">
+                                    <i class="fa-solid fa-heart text-danger icon-hover"></i>
+                                </a>
+                            </div>
+                        </li>
+                    @endforeach
+                  </ul>
+               </div>
+            </div>
+         </div>
+     @endif
+    @endauth
 @endsection
 

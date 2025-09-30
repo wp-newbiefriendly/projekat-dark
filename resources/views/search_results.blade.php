@@ -51,7 +51,7 @@
     @endif
 
     <div class="text-center mt-4">
-        <a href="{{ route('home') }}" class="text-decoration-none">← Nazad na početnu</a>
+        <a href="{{ route('welcome') }}" class="text-decoration-none">← Nazad na početnu</a>
     </div>
 </div>
 @endsection

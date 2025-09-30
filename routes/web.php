@@ -9,9 +9,8 @@ use App\Http\Controllers\UserCitiesController;
 
 
 // Stranice za Usere
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [WeatherController::class, 'showUserFavorites'])
+    ->name('welcome');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search.city');
 

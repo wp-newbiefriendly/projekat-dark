@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CitiesModel;
 use App\Models\WeatherModel;
 use Illuminate\Http\Request;
+use App\Models\UserCitiesModel;
 
 class WeatherController extends Controller
 {
@@ -46,6 +47,23 @@ class WeatherController extends Controller
     {
         $prognoza = WeatherModel::with('city')->get(); // optimizovano u modelu "city"
         return view('weather', compact('prognoza'));
+    }
+    public function showUserFavorites()
+    {
+        // Ako korisnik nije ulogovan, prikaži stranu bez favorita
+        if (!auth()->check()) {
+            return view('welcome', ['favoriteCities' => collect()]);
+        }
+
+        $cityIds = \App\Models\UserCitiesModel::where('user_id', auth()->id())
+            // ->where('favorite', 1)
+            ->pluck('city_id');
+
+        $favoriteCities = \App\Models\CitiesModel::with(['weather', 'forecasts', 'todaysForecast'])
+            ->whereIn('id', $cityIds)
+            ->get();
+
+        return view('welcome', compact('favoriteCities'));
     }
 
     public function showAddCityForm()
