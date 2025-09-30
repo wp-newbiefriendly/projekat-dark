@@ -25,7 +25,9 @@
                 $icon = $fc ? \App\Http\ForecastHelper::getWeatherData($fc->weather_type, $fc->temperature)['icon'] : '';
             @endphp
 
-            @php $isFav = in_array($city->id, $favoriteCityIds); @endphp
+            @php
+                $isFav = in_array($city->id, $favoriteCityIds);
+            @endphp
 
             <div class="d-flex align-items-center gap-2">
                 <a class="fav-btn {{ $isFav ? 'is-fav' : '' }}"

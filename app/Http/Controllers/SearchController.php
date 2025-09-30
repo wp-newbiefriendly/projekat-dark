@@ -13,10 +13,13 @@ class SearchController extends Controller
     {
         $q = trim($request->input('city', ''));
 
+        $favoriteCityIds = auth()->check() ? auth()->user()->cityFavorites->pluck('city_id')->toArray() : [];
+
         // 1) Ako je prazno → prikaži SVE gradove
         if ($q === '') {
-            $cities = CitiesModel::orderBy('name')->get();          // ili paginate(200)
-            return view('search_results', ['cities' => $cities, 'q' => $q]);
+            $cities = CitiesModel::orderBy('name')->get();
+            return view('search_results',
+                ['cities' => $cities, 'q' => $q, 'favoriteCityIds' => $favoriteCityIds]);
         }
 
         // 2) Pretraga "sadrži" (case-insensitive i bezbedno)
@@ -32,15 +35,6 @@ class SearchController extends Controller
                 ->with('error', 'Grad nije pronađen. Pokušajte drugi unos.');
         }
 
-        $favoriteCityIds = auth()->check()
-            ? UserCitiesModel::where('user_id', auth()->id())->pluck('city_id')->toArray()
-            : [];
-
-        // $userFavorites = auth()->user()->cityFavorites()->pluck('city_id')->toArray();
-        $userFavorites = Auth::user()->cityFavorites;
-        $userFavorites = $userFavorites->pluck('city_id')->toArray();
-
-        dd($userFavorites);
 
         return view('search_results', compact('cities', 'q', 'favoriteCityIds'));
     }
