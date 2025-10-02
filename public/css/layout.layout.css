@@ -45,7 +45,18 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     text-align: center;
 }
-.icon-hover:hover {
-    font-size: 24px;
-    transition: font-size 0.3s ease;
+/* Solid heart (default) */
+.heart-icon {
+    font-family: 'Font Awesome 6 Free'; /* Font Awesome 6 */
+    font-weight: 900; /* Solid */
+    transition: all 0.3s ease; /* smooth transition */
 }
+
+/* Kada je hover, menjamo ikonu u regular */
+.btn-outline-danger:hover .heart-icon {
+    font-weight: 400; /* Regular */
+    content: '\f004'; /* Regular heart */
+}
+
+
+

@@ -31,7 +31,7 @@
             @if($favoriteCities->isNotEmpty())
         <div class="text-center mb-1 mt-5">
             <h1 class="display-6 fw-bold mb-1">
-                <i class="fa-regular fa-heart text-danger fa-xs"></i> Favorites</h1>
+                <i class="fa-regular fa-heart text-danger fa-xs"></i> Favorites ({{ $favoriteCities->count() }})</h1>
 
             <div class="container mt-2 shadow-lg">
                 <ul class="list-group list-group-horizontal justify-content-center flex-wrap p-4">
@@ -47,7 +47,10 @@
                                 <p><small><i class="fa-solid fa-droplet"></i> {{ $userFav->todaysForecast->probability ?? 0 }}%</small></p>
                                 <p>{{ $userFav->todaysForecast->forecast_date }}</p>
                                 <a href="{{ route('city_favorite', $userFav->id) }}" class="text-decoration-none" title="Ukloni iz omiljenih">
-                                    <i class="fa-solid fa-heart text-danger icon-hover"></i>
+                                    <button type="button" class="btn btn-sm btn-outline-danger">
+                                        Ukloni iz omiljenih
+                                        <i class="fa-regular fa-heart heart-icon"></i>
+                                    </button>
                                 </a>
                             </div>
                         </li>
@@ -56,6 +59,7 @@
                </div>
             </div>
          </div>
+
      @endif
     @endauth
 @endsection
