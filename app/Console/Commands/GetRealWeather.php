@@ -12,7 +12,7 @@ class GetRealWeather extends Command
      *
      * @var string
      */
-    protected $signature = 'weather:get-real';
+    protected $signature = 'weather:get-real {city}';
 
     /**
      * The console command description.
@@ -27,9 +27,11 @@ class GetRealWeather extends Command
     public function handle()
     {
         $apiKey = env('WEATHER_API_KEY');
-        $location = 'London';
 
-        $url = "https://api.weatherapi.com/v1/current.json?key=$apiKey&q=$location";
+//      $location = 'London';
+        $city = $this->argument('city');
+
+        $url = "https://api.weatherapi.com/v1/current.json?key=$apiKey&q=$city";
 
         $response = Http::get($url);
 
