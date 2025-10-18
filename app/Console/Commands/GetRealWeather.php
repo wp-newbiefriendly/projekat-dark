@@ -31,18 +31,19 @@ class GetRealWeather extends Command
 //      $location = 'London';
         $city = $this->argument('city');
 
-        $url = "https://api.weatherapi.com/v1/current.json?key=$apiKey&q=$city";
+        $response = Http::get("https://api.weatherapi.com/v1/current.json", [
+            'key' => $apiKey,
+            'q' => $city,
+            'aqi' => 'no',
+            'lang' => 'ar',
+        ]);
 
-        $response = Http::get($url);
+        $jsonResponse = $response->json();
+        if (isset($jsonResponse['error']))
+        {
+            $this->output->error($jsonResponse['error']['message']);
+        }
+        dd($jsonResponse);
 
-        dd($response->json());
-
-//        dd([
-//            'Location Name' => $response['location']['name'],
-//            'Region' => $response['location']['region'],
-//            'Country' => $response['location']['country'],
-//            'Last Updated' => $response['current']['last_updated'],
-//            'Temperature' => $response['current']['temp_c'] . '°C'
-//        ]);
     }
 }
