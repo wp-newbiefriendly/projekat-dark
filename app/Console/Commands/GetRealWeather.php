@@ -60,10 +60,18 @@ class GetRealWeather extends Command
           return;
         }
 
-        $forecastDate = $jsonResponse["forecast"]["forecastday"][0]["date"];
-        $temperature = $jsonResponse["forecast"]["forecastday"][0]["day"]["avgtemp_c"];
-        $weatherType = $jsonResponse["forecast"]["forecastday"][0]["day"]["condition"]["text"];
-        $chanceOfRain = $jsonResponse["forecast"]["forecastday"][0]["day"]["daily_chance_of_rain"];
+        $forecastDay = $jsonResponse["forecast"]["forecastday"][0];
+
+        // trenutna realna temperatura i vreme(condition) https://www.weatherapi.com/weather/q/
+//        $forecastCurrent = $jsonResponse["current"];
+
+//        $temperature = $forecastCurrent["temp_c"];
+//        $weatherType = $forecastCurrent["condition"]["text"];
+
+        $forecastDate = $forecastDay["date"];
+        $temperature = $forecastDay["avgtemp_c"];
+        $weatherType = $forecastDay["day"]["condition"]["text"];
+        $chanceOfRain = $forecastDay["day"]["daily_chance_of_rain"];
 
 //        dd($forecastDate,$temperature,$weatherType,$chanceOfRain);
 
