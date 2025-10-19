@@ -46,6 +46,7 @@ class GetRealWeather extends Command
             'q' => $city,
             'aqi' => 'no',
             'days' => '14',
+            'lang' => 'sr'
         ]);
 
         $jsonResponse = $response->json();

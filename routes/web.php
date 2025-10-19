@@ -13,8 +13,8 @@ Route::get('/', [WeatherController::class, 'showUserFavorites'])
     ->name('welcome');
 
 Route::get('/forecast/search', [SearchController::class, 'search'])->name('search.city');
-Route::get('/forecast/{name}', [SearchController::class, 'show'])
-    ->where('name', '.*')
+
+Route::get('/forecast/{city}', [SearchController::class, 'show'])
     ->name('city.forecast');
 
 // Auth Stranice:

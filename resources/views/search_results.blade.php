@@ -36,8 +36,8 @@
                    title="{{ $isFav ? 'Ukloni iz favorita' : 'Dodaj u favorite' }}">
                     <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
                 </a>
-                <a href="{{ route('city.forecast', ['name' => $city->name]) }}">
-                 <span class="btn btn-primary rounded-pill px-3 py-2">
+                <a href="{{ route('city.forecast', ['city' => $city->name]) }}">
+                    <span class="btn btn-primary rounded-pill px-3 py-2">
                   <i class="{{ $icon }}"></i> {{ $city->name }}
                   </span>
                 </a>
@@ -46,7 +46,6 @@
         @endforeach
     </div>
 
-    {{-- Ako koristiš paginate() umesto get(): --}}
     @if(method_exists($cities, 'links'))
         <div class="mt-4 d-flex justify-content-center">
             {{ $cities->links() }}

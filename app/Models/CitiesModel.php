@@ -16,6 +16,11 @@ class CitiesModel extends Model
     protected $fillable = ['name'];
 
     // Jedan grad ima jedan weather zapis (temperature)
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
     public function weather()
     {
         return $this->hasOne(WeatherModel::class, 'city_id');

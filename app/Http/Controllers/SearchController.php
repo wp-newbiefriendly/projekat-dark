@@ -7,13 +7,13 @@ use App\Models\CitiesModel;
 use App\Models\ForecastModel;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class SearchController extends Controller
 {
     public function search(Request $request)
     {
         $q = trim($request->input('city', ''));
-
 
         $favoriteCityIds = auth()->check() ? auth()->user()->cityFavorites->pluck('city_id')->toArray() : [];
 
@@ -45,14 +45,14 @@ class SearchController extends Controller
                     }
 
                     // Opcija: odmah povuci današnji forecast za taj grad
-                    \Artisan::call('weather:get-real', ['city' => $city->name]);
+                    Artisan::call('weather:get-real', ['city' => $city->name]);
 
                     // Učini da se prikaže tek kreirani grad u rezultatima
                     $cities = collect([$city->fresh('todaysForecast')]);
                 } else {
                     // API ga ne poznaje → ne upisuj u bazu, samo poruka korisniku
                     return redirect()->route('welcome')
-                        ->with('error', "Grad '{$q}' ne postoji u API-ju. Pokušajte drugi unos.");
+                        ->with('error', "Grad '{$q}' ne postoji. Pokušajte drugi unos.");
                 }
             }
 
@@ -66,33 +66,22 @@ class SearchController extends Controller
         $cities = CitiesModel::orderBy('name')->get();
         return view('search_results', ['cities' => $cities, 'q' => $q, 'favoriteCityIds' => $favoriteCityIds]);
     }
-        public function show(Request $request, string $name)
+        public function show (CitiesModel $city)
         {
-            $city = CitiesModel::whereRaw('LOWER(name) = ?', [mb_strtolower(trim($name))])->first();
-            if (!$city) {
-                return view('city_forecast', [
-                    'city' => null,
-                    'forecast' => null,
-                    'message' => "Grad '{$name}' ne postoji u bazi.",
-                ]);
-            }
+            $response = Http::get(env("WEATHER_API_URL")."v1/astronomy.json", [
+                'key' => env('WEATHER_API_KEY'),
+                'q' => $city->name,
+                'aqi' => 'no',
+                'lang' => 'sr'
+            ]);
 
-            $today = now()->toDateString();
+            $jsonResponse = $response->json();
 
-            // 1) Pokušaj iz baze
-            $forecast = ForecastModel::where('city_id', $city->id)
-                ->where('forecast_date', $today)
-                ->first();
+            $sunrise = $jsonResponse['astronomy']['astro']['sunrise'];
+            $sunset = $jsonResponse['astronomy']['astro']['sunset'];
 
-            // 2) Ako nema današnjeg, povuci iz API (komanda) pa ponovo učitaj iz baze
-            if (!$forecast) {
-                Artisan::call('weather:get-real', ['city' => $city->name]);
-                $forecast = ForecastModel::where('city_id', $city->id)
-                    ->where('forecast_date', $today)
-                    ->first();
-            }
 
-            return view('city_forecast', compact('city', 'forecast'));
+            return view('city_forecast', compact('city', 'response', 'sunrise', 'sunset'));
         }
 
 

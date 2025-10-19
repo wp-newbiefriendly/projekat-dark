@@ -42,7 +42,13 @@
                         @endphp
                         <li class="list-group-item m-2">
                             <div class="city-info">
-                                <h5>{{ $userFav->name }}</h5>
+                                <h5>
+                                    <a href="
+                                {{ route('city.forecast', ['city' => $userFav->name]) }}">
+                                        {{ $userFav->name }}
+                                    </a>
+                                </h5>
+
                                 <h2><i class="{{ $icon }}"></i> {{ $userFav->todaysForecast->temperature }}°C</h2>
                                 <p><small><i class="fa-solid fa-droplet"></i> {{ $userFav->todaysForecast->probability ?? 0 }}%</small></p>
                                 <p>{{ $userFav->todaysForecast->forecast_date }}</p>
