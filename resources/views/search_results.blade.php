@@ -36,10 +36,13 @@
                    title="{{ $isFav ? 'Ukloni iz favorita' : 'Dodaj u favorite' }}">
                     <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
                 </a>
-                <span class="btn btn-primary rounded-pill px-3 py-2">
-                <i class="{{ $icon }}"></i> {{ $city->name }}
-            </span>
+                <a href="{{ route('city.forecast', ['name' => $city->name]) }}">
+                 <span class="btn btn-primary rounded-pill px-3 py-2">
+                  <i class="{{ $icon }}"></i> {{ $city->name }}
+                  </span>
+                </a>
             </div>
+
         @endforeach
     </div>
 

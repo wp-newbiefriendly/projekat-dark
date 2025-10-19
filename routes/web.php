@@ -12,7 +12,10 @@ use App\Http\Controllers\UserCitiesController;
 Route::get('/', [WeatherController::class, 'showUserFavorites'])
     ->name('welcome');
 
-Route::get('/search', [SearchController::class, 'search'])->name('search.city');
+Route::get('/forecast/search', [SearchController::class, 'search'])->name('search.city');
+Route::get('/forecast/{name}', [SearchController::class, 'show'])
+    ->where('name', '.*')
+    ->name('city.forecast');
 
 // Auth Stranice:
 // Prognoza

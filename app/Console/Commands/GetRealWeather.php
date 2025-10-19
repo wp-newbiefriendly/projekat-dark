@@ -69,7 +69,7 @@ class GetRealWeather extends Command
 //        $weatherType = $forecastCurrent["condition"]["text"];
 
         $forecastDate = $forecastDay["date"];
-        $temperature = $forecastDay["avgtemp_c"];
+        $temperature = $forecastDay["day"]["avgtemp_c"];
         $weatherType = $forecastDay["day"]["condition"]["text"];
         $chanceOfRain = $forecastDay["day"]["daily_chance_of_rain"];
 
@@ -83,7 +83,8 @@ class GetRealWeather extends Command
             'chance_of_rain' => $chanceOfRain,
         ];
 
-        ForecastModel::create($forecast);
+        ForecastModel::updateOrCreate($forecast);
+
         $this->output->success("Forecast for city '$city' added successfully.");
     }
 }
