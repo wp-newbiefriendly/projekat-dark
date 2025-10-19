@@ -27,6 +27,10 @@ class ForecastHelper
      */
     public static function getWeatherData($type, int $temperature)
     {
+//        if(in_array($type, self::WEATHER_ICONS))
+//        {
+//            return self::WEATHER_ICONS[$type];
+//        }
         $key  = strtolower(trim((string)$type));
         $icon = self::WEATHER_ICONS[$key] ?? self::WEATHER_ICONS['cloudy'];
         $color = self::getColorByTemperature($temperature);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CitiesModel;
 use App\Models\UserCitiesModel;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
@@ -12,6 +13,8 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $q = trim($request->input('city', ''));
+
+        Artisan::call('weather:get-real', ['city' => $q]);
 
         $favoriteCityIds = auth()->check() ? auth()->user()->cityFavorites->pluck('city_id')->toArray() : [];
 

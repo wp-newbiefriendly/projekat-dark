@@ -9,7 +9,17 @@ class ForecastModel extends Model
     const TABLE_NAME = 'forecasts';
 
     protected $table = 'forecasts';
-    protected $fillable = ['city_id', 'temperature', 'forecast_date', 'weather_type', 'probability'];
+    protected $fillable = [
+        'city_id',
+        'temperature',
+        'forecast_date',
+        'weather_type',
+        'chance_of_rain',
+        'weather_type',
+        'source',
+        'is_manual',
+        'last_synced_at'
+    ];
 
     const WEATHERS = ["rainy", "sunny", "snowy", "cloudy"];
 

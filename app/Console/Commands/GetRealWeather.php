@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\CitiesModel;
+use App\Models\ForecastModel;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 
 class GetRealWeather extends Command
@@ -12,7 +15,7 @@ class GetRealWeather extends Command
      *
      * @var string
      */
-    protected $signature = 'weather:get-real {city}';
+    protected $signature = 'weather:get-real {city?}';
 
     /**
      * The console command description.
@@ -26,16 +29,23 @@ class GetRealWeather extends Command
      */
     public function handle()
     {
-        $apiKey = env('WEATHER_API_KEY');
-
-//      $location = 'London';
         $city = $this->argument('city');
 
-        $response = Http::get("https://api.weatherapi.com/v1/current.json", [
+        $dbCity = CitiesModel::where(['name' => $city])->first();
+
+        if($dbCity === null)
+        {
+            $dbCity = CitiesModel::create(['name' => $city]);
+        }
+
+
+        $apiKey = env('WEATHER_API_KEY');
+
+        $response = Http::get(env("WEATHER_API_URL")."v1/forecast.json", [
             'key' => $apiKey,
             'q' => $city,
             'aqi' => 'no',
-            'lang' => 'ar',
+            'days' => '14',
         ]);
 
         $jsonResponse = $response->json();
@@ -43,7 +53,29 @@ class GetRealWeather extends Command
         {
             $this->output->error($jsonResponse['error']['message']);
         }
-        dd($jsonResponse);
 
+        if($dbCity->todaysForecast !== null)
+        {
+          $this->output->warning("Today's forecast already exists for this city.");
+          return;
+        }
+
+        $forecastDate = $jsonResponse["forecast"]["forecastday"][0]["date"];
+        $temperature = $jsonResponse["forecast"]["forecastday"][0]["day"]["avgtemp_c"];
+        $weatherType = $jsonResponse["forecast"]["forecastday"][0]["day"]["condition"]["text"];
+        $chanceOfRain = $jsonResponse["forecast"]["forecastday"][0]["day"]["daily_chance_of_rain"];
+
+//        dd($forecastDate,$temperature,$weatherType,$chanceOfRain);
+
+        $forecast = [
+            'city_id' => $dbCity->id,
+            'forecast_date' => $forecastDate,
+            'temperature' => $temperature,
+            'weather_type' => strtolower($weatherType),
+            'chance_of_rain' => $chanceOfRain,
+        ];
+
+        ForecastModel::create($forecast);
+        $this->output->success("Forecast for city '$city' added successfully.");
     }
 }
