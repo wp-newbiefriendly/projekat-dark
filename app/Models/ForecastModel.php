@@ -16,9 +16,6 @@ class ForecastModel extends Model
         'weather_type',
         'chance_of_rain',
         'weather_type',
-        'source',
-        'is_manual',
-        'last_synced_at'
     ];
 
     const WEATHERS = ["rainy", "sunny", "snowy", "cloudy"];
