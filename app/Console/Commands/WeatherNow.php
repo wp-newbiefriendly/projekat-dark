@@ -41,12 +41,13 @@ class WeatherNow extends Command
 
         $apiKey = env('WEATHER_API_KEY');
 
-        $response = Http::get(env("WEATHER_API_URL")."v1/forecast.json", [
+        $response = Http::get(env("WEATHER_API_URL")."v1/astronomy.json", [
             'key' => $apiKey,
             'q' => $city,
             'aqi' => 'no',
             'days' => '14',
         ]);
+        dd($response->json());
 
         $jsonResponse = $response->json();
         if (isset($jsonResponse['error']))

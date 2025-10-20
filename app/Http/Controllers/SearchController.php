@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\WeatherService;
 use Illuminate\Http\Request;
 use App\Models\CitiesModel;
 use App\Models\ForecastModel;
@@ -72,20 +73,14 @@ class SearchController extends Controller
     }
         public function show (CitiesModel $city)
         {
-            $response = Http::get(env("WEATHER_API_URL")."v1/astronomy.json", [
-                'key' => env('WEATHER_API_KEY'),
-                'q' => $city->name,
-                'aqi' => 'no',
-                'lang' => 'sr'
-            ]);
-
-            $jsonResponse = $response->json();
+            $weatherService = new WeatherService();
+            $jsonResponse = $weatherService->getSunsetAndSunrise($city->name);
 
             $sunrise = $jsonResponse['astronomy']['astro']['sunrise'];
             $sunset = $jsonResponse['astronomy']['astro']['sunset'];
 
 
-            return view('city_forecast', compact('city', 'response', 'sunrise', 'sunset'));
+            return view('city_forecast', compact('city', 'weatherService', 'sunrise', 'sunset'));
         }
 
 
