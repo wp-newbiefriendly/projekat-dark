@@ -49,9 +49,17 @@
                                     </a>
                                 </h5>
 
-                                <h2><i class="{{ $icon }}"></i> {{ $userFav->todaysForecast->temperature }}°C</h2>
-                                <p><small><i class="fa-solid fa-droplet"></i> {{ $userFav->todaysForecast->probability ?? 0 }}%</small></p>
-                                <p>{{ $userFav->todaysForecast->forecast_date }}</p>
+                                <h2>
+                                    <i class="{{ $icon }}"></i>
+                                    {{ $fc?->temperature !== null ? $fc->temperature . '°C' : '—' }}
+                                </h2>
+                                <p>
+                                    <small>
+                                        <i class="fa-solid fa-droplet"></i>
+                                        {{ $fc?->probability ?? 0 }}%
+                                    </small>
+                                </p>
+                                <p>{{ $fc?->forecast_date ?? 'Nema prognoze za danas' }}</p>
                                 <a href="{{ route('city_favorite', $userFav->id) }}" class="text-decoration-none" title="Ukloni iz omiljenih">
                                     <button type="button" class="btn btn-sm btn-outline-danger">
                                         Ukloni iz omiljenih

@@ -18,43 +18,47 @@ class SearchController extends Controller
         $favoriteCityIds = auth()->check() ? auth()->user()->cityFavorites->pluck('city_id')->toArray() : [];
 
         if ($q !== '') {
-            // Prvo pokušaj da nađeš u bazi po delimičnom nazivu kao i do sada
             $needle = mb_strtolower($q);
-            $cities = CitiesModel::with('todaysForecast')
-                ->whereRaw('LOWER(name) LIKE ?', ["%{$needle}%"])
-                ->orderBy('name')
+            $cities = CitiesModel::whereRaw('LOWER(name) LIKE ?', ["%{$needle}%"]) // bez with za sada
+            ->orderBy('name')
                 ->get();
 
-            // Ako NIJE nađeno ništa u bazi, proveri API – i samo ako API potvrdi, kreiraj grad
             if ($cities->isEmpty()) {
+                // API verifikacija i kreiranje grada
                 $resp = Http::get(env('WEATHER_API_URL') . 'v1/forecast.json', [
                     'key' => env('WEATHER_API_KEY'),
-                    'q' => $q,
-                    'days' => 1,
+                    'q'   => $q,
+                    'days'=> 1,
                     'aqi' => 'no',
                 ]);
 
                 $data = $resp->json();
                 if ($resp->ok() && !isset($data['error'])) {
-                    $apiName = $data['location']['name'] ?? $q; // normalizovano ime iz API
-
-                    // Kreiraj grad ako baš ne postoji case-insensitive sa tim API imenom
+                    $apiName = $data['location']['name'] ?? $q;
                     $city = CitiesModel::whereRaw('LOWER(name) = ?', [mb_strtolower($apiName)])->first();
                     if (!$city) {
                         $city = CitiesModel::create(['name' => $apiName]);
                     }
 
-                    // Opcija: odmah povuci današnji forecast za taj grad
+                    // Obavezno osveži za novokreirani grad
                     Artisan::call('weather:get-real', ['city' => $city->name]);
-
-                    // Učini da se prikaže tek kreirani grad u rezultatima
-                    $cities = collect([$city->fresh('todaysForecast')]);
+                    $cities = collect([$city]);
                 } else {
-                    // API ga ne poznaje → ne upisuj u bazu, samo poruka korisniku
                     return redirect()->route('welcome')
                         ->with('error', "Grad '{$q}' ne postoji. Pokušajte drugi unos.");
                 }
+            } else {
+                // VAŽNO: za SVAKI pronađeni grad osveži današnji forecast
+                foreach ($cities as $c) {
+                    Artisan::call('weather:get-real', ['city' => $c->name]);
+                }
             }
+
+            // Sad ponovo učitaj sa svežim todaysForecast
+            $cities = CitiesModel::with('todaysForecast')
+                ->whereIn('id', $cities->pluck('id'))
+                ->orderBy('name')
+                ->get();
 
             return view('search_results', [
                 'cities' => $cities,

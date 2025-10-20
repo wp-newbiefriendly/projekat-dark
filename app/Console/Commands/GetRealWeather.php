@@ -53,38 +53,40 @@ class GetRealWeather extends Command
         if (isset($jsonResponse['error']))
         {
             $this->output->error($jsonResponse['error']['message']);
+            return Command::FAILURE;
         }
 
-        if($dbCity->todaysForecast !== null)
-        {
-          $this->output->warning("Today's forecast already exists for this city.");
-          return;
-        }
+//        if($dbCity->todaysForecast !== null)
+//        {
+//          $this->output->warning("Today's forecast already exists for this city.");
+//          return;
+//        }
 
         $forecastDay = $jsonResponse["forecast"]["forecastday"][0];
 
         // trenutna realna temperatura i vreme(condition) https://www.weatherapi.com/weather/q/
-//        $forecastCurrent = $jsonResponse["current"];
 
-//        $temperature = $forecastCurrent["temp_c"];
 //        $weatherType = $forecastCurrent["condition"]["text"];
 
         $forecastDate = $forecastDay["date"];
-        $temperature = $forecastDay["day"]["avgtemp_c"];
+        $nowtemperature = $jsonResponse["current"]["temp_c"];
+//        $temperature = $forecastDay["day"]["avgtemp_c"];
         $weatherType = $forecastDay["day"]["condition"]["text"];
         $chanceOfRain = $forecastDay["day"]["daily_chance_of_rain"];
 
-//        dd($forecastDate,$temperature,$weatherType,$chanceOfRain);
 
-        $forecast = [
-            'city_id' => $dbCity->id,
-            'forecast_date' => $forecastDate,
-            'temperature' => $temperature,
-            'weather_type' => strtolower($weatherType),
-            'chance_of_rain' => $chanceOfRain,
-        ];
-
-        ForecastModel::updateOrCreate($forecast);
+        // Pravilno ažuriranje ili upis današnjeg zapisa
+        ForecastModel::updateOrCreate(
+            [
+                'city_id'       => $dbCity->id,
+                'forecast_date' => $forecastDate,
+            ],
+            [
+                'temperature'    => $nowtemperature,  // trenutna - $temperature je AVG_TEMP
+                'weather_type'   => strtolower($weatherType),
+                'chance_of_rain' => $chanceOfRain,
+            ]
+        );
 
         $this->output->success("Forecast for city '$city' added successfully.");
     }

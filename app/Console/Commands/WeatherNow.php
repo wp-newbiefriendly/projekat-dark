@@ -65,9 +65,12 @@ class WeatherNow extends Command
         $weatherType = $jsonResponse["current"]["condition"]["text"];
         $chanceOfRain = $jsonResponse["forecast"]["forecastday"][0]["day"]["daily_chance_of_rain"];
 
-        dd($forecastDate,$temperature,$weatherType,$chanceOfRain);
-//        dd($jsonResponse);
-
+//        dd($forecastDate,$temperature,$weatherType,$chanceOfRain);
+        $location = $jsonResponse['location'];
+        $current = $jsonResponse['current'];
+        $forecast = $jsonResponse['forecast']['forecastday'][0];
+//        dd($location,$current,$forecast);
+         dd($jsonResponse);
 //    $forecast = [
 //        'city_id' => $dbCity->id,
 //        'forecast_date' => $forecastDate,
